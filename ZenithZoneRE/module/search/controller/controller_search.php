@@ -1,5 +1,5 @@
 <?php
-include("c:/xampp/htdocs/angela/ZenithZoneRE/module/search/model/DAOsearch.php");
+include ("c:/xampp/htdocs/angela/ZenithZoneRE/module/search/model/DAOsearch.php");
 
 switch ($_GET['op']) {
     case 'search_type';
@@ -24,7 +24,7 @@ switch ($_GET['op']) {
 
     case 'search_activity';
         $daosearch = new DAOsearch();
-        $datos_prop = $daosearch->search_activity($_GET['type']);
+        $datos_prop = $daosearch->search_activity($_POST['type']);
         if (!empty($datos_prop)) {
             echo json_encode($datos_prop);
         } else {
@@ -34,10 +34,8 @@ switch ($_GET['op']) {
 
 
     case 'autocomplete';
-        // echo "hola";
-        // break;
         $daosearch = new DAOsearch();
-        $datos_prop = $daosearch->autocomplete($_POST['complete']);
+        $datos_prop = $daosearch->autocomplete($_POST['search']);
         if (!empty($datos_prop)) {
             echo json_encode($datos_prop);
         } else {
@@ -45,7 +43,7 @@ switch ($_GET['op']) {
         }
         break;
 
-    
+
 
 
 }

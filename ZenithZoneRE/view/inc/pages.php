@@ -10,6 +10,9 @@ if (isset($_GET['page'])) {
 		case "shop";
 			include("module/shop/view/shop.html");
 			break;
+		case "login";
+			include("module/login/controller/controller_login.php");
+			break;
 		case "controller_shop";
 			include("module/shop/controller/controller_shop.php");
 			break;

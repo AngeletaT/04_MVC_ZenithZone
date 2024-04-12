@@ -268,18 +268,16 @@
 			<option value="6">Size: Small to Large</option>
 		</select>
 	</div>
-	<table class="table_shop" id="table_shop" style="width: 100%">
-		<tr>
-			<td style="width: 50%">
-				<div class="container_shop" id="content_shop_prop"></div>
-			</td>
-			<td style="width: 30%; text-align: left">
-				<div class="maps" id="map_shop">
-					<div id="map" style="width: 100%; height: 100%"></div>
-				</div>
-			</td>
-		</tr>
-	</table>
+	<div class="shopdiv" style="display: grid; grid-template-columns: 60% 40%; width: 100%; margin-left: 150px">
+		<div style="grid-column: 1; height: 52em; overflow: hidden; overflow-y: scroll; scrollbar-width: none">
+			<div class="container_shop" id="content_shop_prop"></div>
+			<div id="pagination" class="pagination"></div>
+		</div>
+		<!-- MAPA -->
+		<div style="grid-column: 2; padding: 20px">
+			<div class="map_shop" id="map_shop" style="width: 450px; height: 790px"></div>
+		</div>
+	</div>
 
 	<!-- ======= DETAILS SECTION ======= -->
 	<div id="details-shop">
@@ -290,55 +288,14 @@
 		</div>
 
 		<br /><br />
-
-		<div class="date_prop" id="container-date-img">
-			<!-- <div class="list_product_details">
-					<div class="product-info_details">
-						<div class="product-content_details detailstable">
-							<br />
-							<h1><b>nombre</b></h1>
-							<hr class="hr-shop" />
-							<table id="table-shop">
-								<tr>
-									<td class="icon"><i id="col-ico" class="fa-solid fa-bed fa-2xl"></i></td>
-									<td class="text">Habitaciones</td>
-									<td class="icon"><i id="col-ico" class="fa-solid fa-bath fa-2xl"></i></td>
-									<td class="text">Banyos</td>
-								</tr>
-								<tr>
-									<td class="icon"><i id="col-ico" class="fa-solid fa-expand fa-2xl"></i></td>
-									<td class="text">Tamanyo</td>
-									<td class="icon"><i id="col-ico" class="fa-solid fa-key fa-2xl"></i></td>
-									<td class="text">Categoria</td>
-								</tr>
-								<tr>
-									<td class="icon"><i id="col-ico" class="fa-solid fa-house fa-2xl"></i></td>
-									<td class="text">Tipo</td>
-									<td class="icon"><i id="col-ico" class="fa-solid fa-plus fa-2xl"></i></td>
-									<td class="text">Extras</td>
-								</tr>
-							</table>
-							<br />
-							<br />
-							<h3><b>More Information:</b></h3>
-							<p>Descripcion</p>
-							<br />
-							<hr class="hr-shop" />
-							<div class="buttons_details">
-								<span class="button" id="price_details"
-									>Precio
-									<i class="fa-solid fa-euro-sign"></i>
-								</span>
-								<br />
-								<br />
-								<a class="Button_principal contact" href="#">Contacta</a>
-							</div>
-						</div>
-					</div>
-				</div> -->
+		<div class="date_prop" id="container-date-img"></div>
+		<br /><br />
+		<!-- MAPA -->
+		<div class="detail row" style="height: 300px; width: auto; margin-left: 200px; margin-right: 200px" id="mapdet">
 			<div class="map-details" id="map-details">
-				<div id="map" style="width: 100%; height: 100%"></div>
+				<div id="map" style="width: 200px; height: 100px"></div>
 			</div>
 		</div>
+		<br /><br />
 	</div>
 </main>

@@ -10,12 +10,12 @@ switch ($_GET['op']) {
     case 'all_prop':
         try {
             $daoshop = new DAOshop();
-            $datos_prop = $daoshop->select_all_prop();
+            $datos_prop = $daoshop->select_all_prop($_POST['offset'], $_POST['items_page']);
         } catch (Exception $e) {
             echo json_encode("error");
         }
 
-        if (!empty ($datos_prop)) {
+        if (!empty($datos_prop)) {
             echo json_encode($datos_prop);
         } else {
             echo json_encode("error");
@@ -50,7 +50,7 @@ switch ($_GET['op']) {
         }
 
 
-        if (!empty ($dato_prop || $dato_images || $dato_datetime || $dato_visit)) {
+        if (!empty($dato_prop || $dato_images || $dato_datetime || $dato_visit)) {
             $rdo = array();
             $rdo[0] = $dato_prop;
             $rdo[1][] = $dato_images;
@@ -65,8 +65,8 @@ switch ($_GET['op']) {
         // break;
 
         $daoshop = new DAOshop();
-        $datos_prop = $daoshop->filters_home($_POST['filters_home']);
-        if (!empty ($datos_prop)) {
+        $datos_prop = $daoshop->filters_home($_POST['filters_home'], $_POST['offset'], $_POST['items_page']);
+        if (!empty($datos_prop)) {
             echo json_encode($datos_prop);
         } else {
             echo json_encode("error");
@@ -78,8 +78,8 @@ switch ($_GET['op']) {
         // break;
 
         $daoshop = new DAOshop();
-        $datos_prop = $daoshop->filters_shop($_POST['filters_shop']);
-        if (!empty ($datos_prop)) {
+        $datos_prop = $daoshop->filters_shop($_POST['filters_shop'], $_POST['offset'], $_POST['items_page']);
+        if (!empty($datos_prop)) {
             echo json_encode($datos_prop);
         } else {
             echo json_encode("error");
@@ -91,8 +91,8 @@ switch ($_GET['op']) {
         // break;
 
         $daoshop = new DAOshop();
-        $datos_prop = $daoshop->filters_shop($_POST['filters_shop']);
-        if (!empty ($datos_prop)) {
+        $datos_prop = $daoshop->filters_shop($_POST['filters_shop'], $_POST['offset'], $_POST['items_page']);
+        if (!empty($datos_prop)) {
             echo json_encode($datos_prop);
         } else {
             echo json_encode("error");
@@ -104,7 +104,7 @@ switch ($_GET['op']) {
         // break;
         $daoshop = new DAOshop();
         $datos_prop = $daoshop->dynamic_filters_type();
-        if (!empty ($datos_prop)) {
+        if (!empty($datos_prop)) {
             echo json_encode($datos_prop);
         } else {
             echo json_encode("error");
@@ -116,7 +116,7 @@ switch ($_GET['op']) {
         // break;
         $daoshop = new DAOshop();
         $datos_prop = $daoshop->dynamic_filters_city();
-        if (!empty ($datos_prop)) {
+        if (!empty($datos_prop)) {
             echo json_encode($datos_prop);
         } else {
             echo json_encode("error");
@@ -128,7 +128,7 @@ switch ($_GET['op']) {
         // break;
         $daoshop = new DAOshop();
         $datos_prop = $daoshop->dynamic_filters_category();
-        if (!empty ($datos_prop)) {
+        if (!empty($datos_prop)) {
             echo json_encode($datos_prop);
         } else {
             echo json_encode("error");
@@ -140,7 +140,7 @@ switch ($_GET['op']) {
         // break;
         $daoshop = new DAOshop();
         $datos_prop = $daoshop->dynamic_filters_extra();
-        if (!empty ($datos_prop)) {
+        if (!empty($datos_prop)) {
             echo json_encode($datos_prop);
         } else {
             echo json_encode("error");
@@ -152,7 +152,7 @@ switch ($_GET['op']) {
         // break;
         $daoshop = new DAOshop();
         $datos_prop = $daoshop->dynamic_filters_activity();
-        if (!empty ($datos_prop)) {
+        if (!empty($datos_prop)) {
             echo json_encode($datos_prop);
         } else {
             echo json_encode("error");
@@ -169,11 +169,72 @@ switch ($_GET['op']) {
             echo json_encode("error");
         }
 
-        if (!empty ($datos_prop)) {
+        if (!empty($datos_prop)) {
             echo json_encode($datos_prop);
         } else {
             echo json_encode("error");
         }
+        break;
+
+    case 'count';
+
+        try {
+            $daoshop = new DAOshop();
+            $datos_prop = $daoshop->select_count();
+        } catch (Exception $e) {
+            echo json_encode("error");
+        }
+
+        if (!empty($datos_prop)) {
+            echo json_encode($datos_prop);
+        } else {
+            echo json_encode("error");
+        }
+        break;
+
+
+    case 'count_shop';
+
+        try {
+            $daoshop = new DAOshop();
+            $datos_prop = $daoshop->select_count_filter($_POST['filters_shop']);
+        } catch (Exception $e) {
+            echo json_encode("error");
+        }
+
+        if (!empty($datos_prop)) {
+            echo json_encode($datos_prop);
+        } else {
+            echo json_encode("error");
+        }
+        break;
+
+    case 'count_home';
+
+        try {
+            $daoshop = new DAOshop();
+            $datos_prop = $daoshop->count_home($_POST['filters_home']);
+        } catch (Exception $e) {
+            echo json_encode("error");
+        }
+
+        if (!empty($datos_prop)) {
+            echo json_encode($datos_prop);
+        } else {
+            echo json_encode("error");
+        }
+        break;
+
+
+    // IN PROGRESS
+    case 'count_search';
+        // $daoshop = new DAO_shop();
+        // $datos_prop = $daoshop->count_search($_POST['filters_search']);
+        // if (!empty($datos_prop)) {
+        //     echo json_encode($datos_prop);
+        // } else {
+        //     echo "error";
+        // }
         break;
 
     default;

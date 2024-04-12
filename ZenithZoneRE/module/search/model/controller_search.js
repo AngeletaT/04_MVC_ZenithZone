@@ -1,8 +1,8 @@
 function load_type_search() {
 	// console.log("load_type")
-	ajaxPromise("module/search/controller/controller_search.php?op=search_type", "GET", "JSON")
+	ajaxPromise("module/search/controller/controller_search.php?op=search_type", "POST", "JSON")
 		.then(function (data) {
-			console.log(data)
+			// console.log(data)
 			$("<option>Type</option>").attr("selected", true).attr("disabled", true).appendTo("#search_type")
 			for (row in data) {
 				$('<option value="' + data[row].code_type + '">' + data[row].name_type + "</option>").appendTo("#search_type")
@@ -19,9 +19,9 @@ function load_activity_search(type) {
 	// updateFiltersShop("code_act", null);
 
 	if (type == undefined) {
-		ajaxPromise("module/search/controller/controller_search.php?op=search_activity_null", "GET", "JSON")
+		ajaxPromise("module/search/controller/controller_search.php?op=search_activity_null", "POST", "JSON")
 			.then(function (data) {
-				console.log(data)
+				// console.log(data)
 				$("<option>Activity</option>").attr("selected", true).attr("disabled", true).appendTo("#search_activity")
 				for (row in data) {
 					$('<option value="' + data[row].code_act + '">' + data[row].name_act + "</option>").appendTo(
@@ -35,9 +35,9 @@ function load_activity_search(type) {
 			})
 	} else {
 		console.log(type)
-		ajaxPromise("module/search/controller/controller_search.php?op=search_activity", "GET", "JSON", type)
+		ajaxPromise("module/search/controller/controller_search.php?op=search_activity", "POST", "JSON", type)
 			.then(function (data) {
-				console.log(data)
+				// console.log(data)
 				$("<option>Activity</option>").attr("selected", true).attr("disabled", true).appendTo("#search_activity")
 				for (row in data) {
 					$('<option value="' + data[row].code_act + '">' + data[row].name_act + "</option>").appendTo(
@@ -92,33 +92,47 @@ function updateFiltersShop(codeKey, value) {
 }
 
 function autocomplete() {
-	console.log("autocomplete")
+	// console.log("autocomplete")
 	$("#search_text").on("keyup", function () {
-		let complete = {complete: $(this).val()}
-		// if ($("#search_type").val() != 0) {
-		// 	sdata.type = $("#search_type").val()
-		// 	if ($("#search_type").val() != 0 && $("#search_activity").val() != 0) {
-		// 		sdata.activity = $("#search_activity").val()
-		// 	}
-		// }
-		// if ($("#search_type").val() == undefined && $("#search_activity").val() != 0) {
-		// 	sdata.activity = $("#search_activity").val()
-		// }
-		ajaxPromise("module/search/controller/controller_search.php?op=autocomplete", "POST", "JSON", complete)
+		let sdata = {complete: $(this).val()}
+		// Valor de type existe
+		if ($("#search_type").val() != null) {
+			sdata.type = $("#search_type").val()
+			// Valor de type y activity existe
+			if ($("#search_type").val() != null && $("#search_activity").val() != null) {
+				sdata.activity = $("#search_activity").val()
+			}
+			// Valor de type no existe y activity existe
+		} else if ($("#search_type").val() == undefined && $("#search_activity").val() != null) {
+			sdata.activity = $("#search_activity").val()
+		}
+
+		console.log(sdata)
+		ajaxPromise("module/search/controller/controller_search.php?op=autocomplete", "POST", "JSON", sdata)
 			.then(function (data) {
-				console.log("autocomplete")
+				// console.log("autocompletepromise")
+				// console.log(data)
 				$("#search_auto").empty()
 				$("#search_auto").fadeIn(500)
-				for (row in data) {
+				if (data.length == 0) {
 					$("<div></div>", {
 						"class": "searchElement",
-						"id": data[row].code_city,
-						"text": data[row].name_city,
-						"value": data[row].name_city,
+						"text": "No existen datos",
 					}).appendTo("#search_auto")
+				} else {
+					for (row in data) {
+						$("<div></div>", {
+							"class": "searchElement",
+							"id": data[row].code_city,
+							"text": data[row].name_city,
+							"value": data[row].name_city,
+						}).appendTo("#search_auto")
+					}
 				}
 			})
-			.catch(function () {
+			.catch(function (e) {
+				console.error("Peta el post")
+				console.log(e)
 				$("#search_auto").fadeOut(500)
 			})
 	})
@@ -126,17 +140,11 @@ function autocomplete() {
 		$("#search_text").val(this.id)
 		$("#search_auto").fadeOut(1000)
 	})
-	// BUSCAR PARA QUE SIRVE ESTO
-	// $(document).on('click scroll', function (event) {
-	//     if (event.target.id !== 'autocom') {
-	//         $('#search_auto').fadeOut(1000);
-	//     }
-	// });
 }
 
 function button_search() {
 	$("#search_button").on("click", function () {
-		// console.log("hola");
+		// console.log("Button search");
 		// return false;
 
 		setTimeout(function () {

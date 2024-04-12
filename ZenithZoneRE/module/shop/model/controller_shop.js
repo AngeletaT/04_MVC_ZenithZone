@@ -15,6 +15,7 @@ function loadprops() {
 		ajaxForSearch_Shop("module/shop/controller/controller_shop.php?op=filters_shop")
 		// console.log("filtershop");
 		highlight_filters()
+		// pagination()
 		// } else if (filters_search !== false) {
 		// 	ajaxForSearch("module/shop/controller/controller_shop.php?op=filters_search")
 		// 	// console.log("filterssearch");
@@ -23,17 +24,36 @@ function loadprops() {
 	}
 }
 
+// #region AJAX
 // FUNCION QUE LLAMA A SALTO HOME
-function ajaxForSearch(url) {
+function ajaxForSearch(url, offset = 0, items_page = 2) {
 	var filters_home = JSON.parse(localStorage.getItem("filters_home"))
 	localStorage.removeItem("filters_home")
 	// console.log(filters_home);
+	console.log("offset es:", offset)
 
-	ajaxPromise(url, "POST", "JSON", {"filters_home": filters_home})
+	if (offset != 0) {
+		if (localStorage.getItem("id")) {
+			var move_id = JSON.parse(localStorage.getItem("id"))
+		}
+		localStorage.setItem("move", JSON.stringify(offset))
+	} else {
+		if (localStorage.getItem("move")) {
+			offset = JSON.parse(localStorage.getItem("move"))
+			if (localStorage.getItem("id")) {
+				var move_id = JSON.parse(localStorage.getItem("id"))
+			}
+		}
+		localStorage.setItem("move", JSON.stringify(0))
+		
+	}
+
+	ajaxPromise(url, "POST", "JSON", {"filters_home": filters_home, "offset": offset, "items_page": items_page})
 		.then(function (data) {
-			console.log(data)
+			console.log("Los datos del AjaxForSearch:", data)
 			$("#content_shop_prop").empty()
 			$(".date_img" && ".date_prop").empty()
+			$("#mapdet").hide()
 
 			if (data === "error") {
 				$("<div></div>")
@@ -94,6 +114,7 @@ function ajaxForSearch(url) {
                         </table>
 					`)
 				}
+
 				$(".owl-list").owlCarousel({
 					loop: true,
 					autoplay: true,
@@ -112,30 +133,56 @@ function ajaxForSearch(url) {
 						},
 					},
 				})
+
+				if (localStorage.getItem("id")) {
+					document.getElementById(move_id).scrollIntoView()
+				}
+
+				load_map_shop(data)
 			}
 		})
 		.catch(function (e) {
-			console.error(e)
+			console.error("Catch error: ", e)
 			// window.location.href = "index.php?module=ctrl_exceptions&op=503&type=503&lugar=Function ajxForSearch SHOP";
 		})
 }
 
 // FUNCION QUE LLAMA A CARGAR SHOP
-function ajaxForSearch_Shop(url) {
+function ajaxForSearch_Shop(url, offset = 0, items_page = 2) {
 	var filters_shop = JSON.parse(localStorage.getItem("filters_shop"))
-	// console.log(filters_shop);
+	// console.log(filters_shop)
 
-	ajaxPromise(url, "POST", "JSON", {"filters_shop": filters_shop})
+	console.log("offset es:", offset)
+
+	if (offset != 0) {
+		if (localStorage.getItem("id")) {
+			var move_id = JSON.parse(localStorage.getItem("id"))
+		}
+		localStorage.setItem("move", JSON.stringify(offset))
+	} else {
+		if (localStorage.getItem("move")) {
+			offset = JSON.parse(localStorage.getItem("move"))
+			if (localStorage.getItem("id")) {
+				var move_id = JSON.parse(localStorage.getItem("id"))
+			}
+		}
+		localStorage.setItem("move", JSON.stringify(offset))
+	}
+
+	ajaxPromise(url, "POST", "JSON", {"filters_shop": filters_shop, "offset": offset, "items_page": items_page})
 		.then(function (data) {
-			console.log(data)
+			console.log("Los datos del AjaxForSearch_Shop:", data)
+
 			$("#content_shop_prop").empty()
 			$(".date_img" && ".date_prop").empty()
+			$("#mapdet").hide()
 
 			if (data === "error") {
 				$("<div></div>")
 					.appendTo("#content_shop_prop")
 					.html("<h3>¡No se encuentran resultados con los filtros aplicados!</h3>")
 			} else {
+				// console.log(data)
 				for (row in data) {
 					var carousel = ""
 					data[row].images.forEach(function (image) {
@@ -144,52 +191,51 @@ function ajaxForSearch_Shop(url) {
 					$("<div></div>").attr({"id": data[row].code_prop, "class": "propertytable"}).appendTo("#content_shop_prop")
 						.html(`
                         <table>
-                            <tr>
+						<tr>
 								<td rowspan="7" class="imagen">
                 				    <div class="owl-container imagen shop">
-                				        <div class="owl-list owl-carousel owl-theme imagen shop">
-                				            ${carousel}
-                				        </div>
+									<div class="owl-list owl-carousel owl-theme imagen shop">
+									${carousel}
+									</div>
                 				    </div>
-                				</td>
-                                <td colspan="8"><a class="titlelist" id="${data[row].code_prop}">
+									</td>
+									<td colspan="8"><a class="titlelist" id="${data[row].code_prop}">
 									<h2>${data[row].price
 										.toString()
 										.replace(/\B(?=(\d{3})+(?!\d))/g, ".")}&nbsp;<i class="fa-solid fa-euro-sign"></i></h2></a>
-								</td>
-                            </tr>
+										</td>
+										</tr>
                             <tr>
-								<td colspan="8">${data[row].name_prop}</td>
+							<td colspan="8">${data[row].name_prop}</td>
 							</tr>
 							<tr>
-								<td colspan="8">${data[row].description}</td>
+							<td colspan="8">${data[row].description}</td>
 							</tr>
                             <tr>
-                                <td class="icon"><i class="fa-solid fa-bed fa-xl"></i></td>
-                                <td class="text">${data[row].rooms}</td>
-                                <td class="icon"><i class="fa-solid fa-bath fa-xl"></i></td>
-                                <td class="text">${data[row].baths}</td>
-                                <td class="icon"><i class="fa-solid fa-key fa-xl"></i></td>
-                                <td class="text">${data[row].name_cat}</td>
+							<td class="icon"><i class="fa-solid fa-bed fa-xl"></i></td>
+							<td class="text">${data[row].rooms}</td>
+							<td class="icon"><i class="fa-solid fa-bath fa-xl"></i></td>
+							<td class="text">${data[row].baths}</td>
+							<td class="icon"><i class="fa-solid fa-key fa-xl"></i></td>
+							<td class="text">${data[row].name_cat}</td>
                             </tr>
                             <tr>
-                                <td class="icon"><i class="fa-solid fa-expand fa-xl"></i></td>
-                                <td class="text">${data[row].m2}</td>
-                                <td class="icon"><i class="fa-solid fa-location-dot fa-xl"></i></td>
-                                <td class="text">${data[row].name_city}</td>
-                                <td class="icon"><i class="fa-solid fa-plus fa-xl"></i></td>
-                                <td class="text">${data[row].name_extra}</td>
+							<td class="icon"><i class="fa-solid fa-expand fa-xl"></i></td>
+							<td class="text">${data[row].m2}</td>
+							<td class="icon"><i class="fa-solid fa-location-dot fa-xl"></i></td>
+							<td class="text">${data[row].name_city}</td>
+							<td class="icon"><i class="fa-solid fa-plus fa-xl"></i></td>
+							<td class="text">${data[row].name_extra}</td>
                             </tr>
 							<tr>
-                                <td colspan='8'>
-                                    <button id='${
-																			data[row].code_prop
-																		}' class='more_info_list Button_principal'>More Info</button>
-                                </td>
+							<td colspan='8'>
+							<button id='${data[row].code_prop}' class='more_info_list Button_principal'>More Info</button>
+							</td>
 							</tr>
-                        </table>
-					`)
+							</table>
+							`)
 				}
+
 				$(".owl-list").owlCarousel({
 					loop: true,
 					autoplay: true,
@@ -208,8 +254,12 @@ function ajaxForSearch_Shop(url) {
 						},
 					},
 				})
+
+				if (localStorage.getItem("id")) {
+					document.getElementById(move_id).scrollIntoView()
+				}
+				load_map_shop(data)
 			}
-			load_map_shop(data)
 		})
 		.catch(function (e) {
 			console.error(e)
@@ -217,6 +267,7 @@ function ajaxForSearch_Shop(url) {
 		})
 }
 
+// #region DETAILS
 // FUNCION QUE LLAMA A CARGAR DETAILS
 function clicks() {
 	$(document).on("click", ".more_info_list", function () {
@@ -235,9 +286,11 @@ function loadDetails(code_prop) {
 			// console.log(data);
 			$("#content_shop_prop").empty()
 			$("#filters_shop").empty()
+			$(".shopdiv").empty()
 			$(".date_img_dentro").empty()
 			$(".date_prop_dentro").empty()
 			$(".orderbyshop").empty()
+			$("#mapdet").show()
 
 			for (row in data[1][0]) {
 				$("<div></div>").attr({"id": data[1][0].code_img, class: "item date_img_dentro"}).appendTo(".date_img").html(`
@@ -299,7 +352,7 @@ function loadDetails(code_prop) {
 								<hr class="hr-shop" />
 								<div class="buttons_details">
 									<span class="button" id="price_details" style="font-size: 24px;">
-										${data[0].price} &nbsp;
+										${data[0].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} &nbsp;
 										<i class="fa-solid fa-euro-sign"></i>
 									</span>
 									<br />
@@ -338,6 +391,7 @@ function loadDetails(code_prop) {
 		})
 }
 
+// #region FILTROS
 // FUNCION QUE IMPRIME LOS FILTROS
 function print_filters() {
 	// console.log("print_filters");
@@ -489,6 +543,7 @@ function print_activity() {
 		})
 }
 
+// #region MODAL FILTRO
 // MODALES
 function modalrooms() {
 	$("#filter_rooms").click(function () {
@@ -613,6 +668,7 @@ function modalextra() {
 	})
 }
 
+// #region FUNCIONES DE FILTROS
 // FUNCIONES DE FILTROS
 function filters_shop() {
 	// console.log("filters_shop");
@@ -776,7 +832,7 @@ function highlight_filters() {
 			$("#filter_bath").addClass("activefilter")
 			if (localStorage.getItem("filter_bath")) {
 				var bathsValue = parseInt(localStorage.getItem("filter_bath"))
-				console.log(bathsValue)
+				// console.log(bathsValue)
 				$("input[name='bath']")
 					.filter("[value='" + bathsValue + "']")
 					.prop("checked", true)
@@ -789,7 +845,7 @@ function highlight_filters() {
 			$("#filter_size").addClass("activefilter")
 			if (localStorage.getItem("filter_size")) {
 				selectedValuesize = localStorage.getItem("filter_size")
-				console.log(selectedValuesize)
+				// console.log(selectedValuesize)
 				$("#rangeSlidersize").val(selectedValuesize)
 				$("#selectedValuesize").text(selectedValuesize)
 				$(".buttonsize").text(selectedValuesize)
@@ -843,7 +899,7 @@ function filter_orderby() {
 	// console.log("orderby");
 	$("#filter_orderby").change(function () {
 		var orderby = this.value
-		console.log(orderby)
+		// console.log(orderby)
 		localStorage.setItem("filter_orderby", orderby)
 		// location.reload()
 		print_orderby()
@@ -854,13 +910,13 @@ function filter_orderby() {
 }
 
 function print_orderby() {
-	console.log("print_orderby")
+	// console.log("print_orderby")
 	ajaxPromise("module/shop/controller/controller_shop.php?op=orderby", "POST", "JSON", {
 		"orderby": localStorage.getItem("filter_orderby"),
 	})
 		.then(function (data) {
-			console.log("dentro de then print_orderby")
-			console.log(data)
+			// console.log("dentro de then print_orderby")
+			// console.log(data)
 			$("#content_shop_prop").empty()
 			$(".date_img" && ".date_prop").empty()
 
@@ -950,63 +1006,111 @@ function print_orderby() {
 		})
 }
 
+// #region MAPA
 // MAPAS
 function load_map_shop(data) {
+	// console.log("load_map_shop")
 	mapboxgl.accessToken = "pk.eyJ1IjoiMjBqdWFuMTUiLCJhIjoiY2t6eWhubW90MDBnYTNlbzdhdTRtb3BkbyJ9.uR4BNyaxVosPVFt8ePxW1g"
 	const map = new mapboxgl.Map({
-		container: "map",
+		container: "map_shop",
 		style: "mapbox://styles/mapbox/streets-v11",
-		center: [-0.61667, 38.83966492354664], // starting position [lng, lat]
-		zoom: 6, // starting zoom
+		center: [-3.7035825, 40.416705], // starting position [lng, lat]
+		zoom: 4, // starting zoom
 	})
 
 	for (row in data) {
 		const marker = new mapboxgl.Marker()
 		const minPopup = new mapboxgl.Popup()
-		minPopup.setHTML(
-			'<h3 style="text-align:center;">' +
-				data[row].name_prop +
-				'</h3><p style="text-align:center;">M2: <b>' +
-				data[row].m2 +
-				"</b></p>" +
-				'<p style="text-align:center;">Price: <b>' +
-				data[row].price +
-				"€</b></p>" +
-				'<img src=" ' +
-				data[row].images[0] +
-				'"/>' +
-				'<a class="button button-primary-outline button-ujarak button-size-1 wow fadeInLeftSmall link" data-wow-delay=".4s" id="' +
-				data[row].code_prop +
-				'">Read More</a>'
-		)
+		minPopup.setHTML(`
+			<h5 style="text-align:center;">${data[row].name_prop}</h5>
+			<table>
+				<tr>
+					<td><i class="fa-solid fa-bed fa-xl"></i></td>
+					<td style="width: 50px;">${data[row].rooms}</td>
+					<td><i class="fa-solid fa-bath fa-xl"></i></td>
+					<td>${data[row].baths}</td>
+                </tr>
+                <tr>
+					<td><i class="fa-solid fa-expand fa-xl"></i></td>
+					<td>${data[row].m2}</td>
+					<td><i class="fa-solid fa-euro-sign fa-xl"></i></td>
+					<td>${data[row].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}</td>
+                </tr>
+			</table>
+			<img src="${data[row].images[0]}" style="width:200px; height:200px; text-align:center;" /><br><br>
+			<button id='${data[row].code_prop}' class='more_info_list Button_principal' style>More Info</button>
+		`)
 		marker.setPopup(minPopup).setLngLat([data[row].longitud, data[row].latitud]).addTo(map)
 	}
 }
 
 function load_map_details(code_prop) {
+	// console.log("load_map_details")
+	// console.log(code_prop.longitud, code_prop.latitud)
 	mapboxgl.accessToken = "pk.eyJ1IjoiMjBqdWFuMTUiLCJhIjoiY2t6eWhubW90MDBnYTNlbzdhdTRtb3BkbyJ9.uR4BNyaxVosPVFt8ePxW1g"
 	const map = new mapboxgl.Map({
-		container: "map",
+		container: "map-details",
 		style: "mapbox://styles/mapbox/streets-v11",
 		center: [code_prop.longitud, code_prop.latitud], // starting position [lng, lat]
 		zoom: 10, // starting zoom
 	})
 	const markerDetails = new mapboxgl.Marker()
 	const minPopup = new mapboxgl.Popup()
-	minPopup.setHTML(
-		"<h4>" +
-			code_prop.name_prop +
-			"</h4><p>M2: " +
-			code_prop.m2 +
-			"</p>" +
-			"<p>Price: " +
-			code_prop.price +
-			"€</p>" +
-			'<img src=" ' +
-			code_prop.images[0] +
-			'"/>'
-	)
 	markerDetails.setPopup(minPopup).setLngLat([code_prop.longitud, code_prop.latitud]).addTo(map)
+}
+
+// #region PAGINACION
+// PAGINACION
+function pagination() {
+	console.log("pagination")
+	var filters_home = JSON.parse(localStorage.getItem("filters_home")) || false
+	var filters_shop = JSON.parse(localStorage.getItem("filters_shop")) || false
+	if (filters_home) {
+		var url = "module/shop/controller/controller_shop.php?op=count_home"
+		var filter = filters_home
+	} else if (filters_shop) {
+		var url = "module/shop/controller/controller_shop.php?op=count_shop"
+		var filter = filters_shop
+	} else {
+		var url = "module/shop/controller/controller_shop.php?op=count"
+		var filter = undefined
+	}
+	ajaxPromise(url, "POST", "JSON", {"filters_home": filters_home, "filters_shop": filters_shop}).then(function (data) {
+		console.log("dentro de then pagination", data)
+		var offset = data[0].contador
+
+		if (offset >= 2) {
+			total_pages = Math.ceil(offset / 2)
+		} else {
+			total_pages = 1
+		}
+		console.log("Hay estas paginas", total_pages)
+
+		var paginationContainer = document.getElementById("pagination")
+		paginationContainer.innerHTML = ""
+
+		for (let i = 1; i <= total_pages; i++) {
+			let button = document.createElement("button")
+			button.id = i
+			button.classList.add("buttonpagination")
+			button.innerHTML = i
+			button.addEventListener("click", function () {
+				let page = this.id
+				offset = 2 * (page - 1)
+				console.log("El page es", page)
+				console.log("El offset es", offset)
+				console.log("Filter es:", filter)
+				if (filter != undefined) {
+					ajaxForSearch_Shop("module/shop/controller/controller_shop.php?op=filters_shop", filters_shop, offset, 2)
+				} else {
+					ajaxForSearch("module/shop/controller/controller_shop.php?op=shopAll", offset, 2)
+				}
+				$("html, body").animate({scrollTop: $(".wrap")})
+				location.reload()
+			})
+			paginationContainer.appendChild(button)
+		}
+	})
 }
 
 $(document).ready(function () {
@@ -1016,4 +1120,5 @@ $(document).ready(function () {
 	loadprops()
 	clicks()
 	filters_shop()
+	pagination()
 })

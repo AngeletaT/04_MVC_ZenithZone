@@ -1,0 +1,19 @@
+SELECT username, password 
+        FROM users 
+        WHERE username = 'Roberto34'derror_passwdSELECT username, password 
+        FROM users 
+        WHERE username = 'Roberto32'sderror_passwdSELECT username, password 
+        FROM users 
+        WHERE username = 'Roberto34'SELECT * 
+        FROM users 
+        WHERE username = 'Roberto34'error_usernameSELECT * 
+        FROM users 
+        WHERE username = 'Salva32'$2y$12$HuhpFdE6TZ6R4dSixiYwLOoqU9YIhyk/Vpqguu0wlpBnGBvcASQmS12345error_passwdSELECT * 
+        FROM users 
+        WHERE username = 'Salva32'okSELECT * 
+        FROM users 
+        WHERE username = 'Salva32'okSELECT * 
+        FROM users 
+        WHERE username = 'Salva32'okSELECT * 
+        FROM users 
+        WHERE username = 'Salva32'ok
