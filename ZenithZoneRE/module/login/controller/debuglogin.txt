@@ -1,14 +1,4 @@
-SELECT username, password 
-        FROM users 
-        WHERE username = 'Roberto34'derror_passwdSELECT username, password 
-        FROM users 
-        WHERE username = 'Roberto32'sderror_passwdSELECT username, password 
-        FROM users 
-        WHERE username = 'Roberto34'SELECT * 
-        FROM users 
-        WHERE username = 'Roberto34'error_usernameSELECT * 
-        FROM users 
-        WHERE username = 'Salva32'$2y$12$HuhpFdE6TZ6R4dSixiYwLOoqU9YIhyk/Vpqguu0wlpBnGBvcASQmS12345error_passwdSELECT * 
+SELECT * 
         FROM users 
         WHERE username = 'Salva32'okSELECT * 
         FROM users 
@@ -16,4 +6,108 @@ SELECT username, password
         FROM users 
         WHERE username = 'Salva32'okSELECT * 
         FROM users 
-        WHERE username = 'Salva32'ok
+        WHERE username = 'Salva32'okSELECT * 
+        FROM users 
+        WHERE username = 'Salva32'okSELECT * 
+        FROM users 
+        WHERE username = 'Salva32'okSELECT * 
+        FROM users 
+        WHERE username = 'Salva32'okSELECT * 
+        FROM users 
+        WHERE username = 'Salva32'okSELECT * 
+        FROM users 
+        WHERE username = 'Salva32'okSELECT * 
+        FROM users 
+        WHERE username = 'Salva32'okSELECT * 
+        FROM users 
+        WHERE username = 'Salva32'okSELECT * 
+        FROM users 
+        WHERE username = 'Salva32'okSELECT * 
+        FROM users 
+        WHERE username = 'Salva32'okSELECT * 
+        FROM users 
+        WHERE username = 'Salva32'okSELECT * 
+        FROM users 
+        WHERE username = 'Salva32'okSELECT * 
+        FROM users 
+        WHERE username = 'Salva32'okSELECT * 
+        FROM users 
+        WHERE username = 'Salva32'okSELECT * 
+        FROM users 
+        WHERE username = 'Salva32'okSELECT * 
+        FROM users 
+        WHERE username = 'Salva32'okSELECT * 
+        FROM users 
+        WHERE username = 'Salva32'okSELECT * 
+        FROM users 
+        WHERE username = 'Salva32'okSELECT * 
+        FROM users 
+        WHERE username = 'Salva32'okSELECT * 
+        FROM users 
+        WHERE username = 'Salva32'okSELECT * 
+        FROM users 
+        WHERE username = 'Salva32'okSELECT * 
+        FROM users 
+        WHERE username = 'Salva32'okSELECT * 
+        FROM users 
+        WHERE username = 'Salva32'okeyJ0eXAiOiJKV1QiLCAiYWxnIjoiSFMyNTYifQ.eyJpYXQiOiIxNzEzMTgyNDU0IiwiZXhwIjoiMTcxMzE4MzA1NCIsInVzZXJuYW1lIjoiU2FsdmEzMiJ9.EYhnj6Mhp86zfptfltG0l6Gg0sBpuC61wL0XgSGBi4QSELECT * 
+        FROM users 
+        WHERE username = 'Salva32'okeyJ0eXAiOiJKV1QiLCAiYWxnIjoiSFMyNTYifQ.eyJpYXQiOiIxNzEzMTgyNDc4IiwiZXhwIjoiMTcxMzE4MzA3OCIsInVzZXJuYW1lIjoiQ2FpbjMzIn0.zBFh0D_DaHJyOb_bVQxhfCHPnNoFLba1C_kNiigWF5kSELECT * 
+        FROM users 
+        WHERE username = 'Cain33'okeyJ0eXAiOiJKV1QiLCAiYWxnIjoiSFMyNTYifQ.eyJpYXQiOiIxNzEzMTgyNTE1IiwiZXhwIjoiMTcxMzE4MzExNSIsInVzZXJuYW1lIjoiU2FsdmEzMiJ9.DafyEAdDExnUGBlKa7boJy8hPi-UYnj5Qgm5-Mey0aUSELECT * 
+        FROM users 
+        WHERE username = 'Salva32'okSELECT * 
+        FROM users 
+        WHERE username = 'Salva32'okeyJ0eXAiOiJKV1QiLCAiYWxnIjoiSFMyNTYifQ.eyJpYXQiOiIxNzEzMTgyNTQ5IiwiZXhwIjoiMTcxMzE4MzE0OSIsInVzZXJuYW1lIjoiQ2FpbjMzIn0.7nCtmy4DnVjRUvtVMFgEiAvbjvIB7Mr4Z-gV0M8WmQ8SELECT * 
+        FROM users 
+        WHERE username = 'Cain33'okSELECT * 
+        FROM users 
+        WHERE username = 'Cain33'okeyJ0eXAiOiJKV1QiLCAiYWxnIjoiSFMyNTYifQ.eyJpYXQiOiIxNzEzMTgyNTg4IiwiZXhwIjoiMTcxMzE4MzE4OCIsInVzZXJuYW1lIjoiQ2FpbjMzIn0.dWUoLKx6ilK6G2DJQTcZnGPeYw3KRTprXPwDSdzkWVUSELECT * 
+        FROM users 
+        WHERE username = 'Cain33'okSELECT * 
+        FROM users 
+        WHERE username = 'Cain33'okSELECT * 
+        FROM users 
+        WHERE username = 'Cain33'okSELECT * 
+        FROM users 
+        WHERE username = 'Cain33'okSELECT * 
+        FROM users 
+        WHERE username = 'Cain33'okSELECT * 
+        FROM users 
+        WHERE username = 'Cain33'okSELECT * 
+        FROM users 
+        WHERE username = 'Cain33'okSELECT * 
+        FROM users 
+        WHERE username = 'Cain33'okSELECT * 
+        FROM users 
+        WHERE username = 'Cain33'okSELECT * 
+        FROM users 
+        WHERE username = 'Cain33'okSELECT * 
+        FROM users 
+        WHERE username = 'Cain33'okSELECT * 
+        FROM users 
+        WHERE username = 'Cain33'okSELECT * 
+        FROM users 
+        WHERE username = 'Cain33'okSELECT * 
+        FROM users 
+        WHERE username = 'Cain33'okSELECT * 
+        FROM users 
+        WHERE username = 'Cain33'okSELECT * 
+        FROM users 
+        WHERE username = 'Cain33'okSELECT * 
+        FROM users 
+        WHERE username = 'Cain33'okSELECT * 
+        FROM users 
+        WHERE username = 'Cain33'okSELECT * 
+        FROM users 
+        WHERE username = 'Cain33'okSELECT * 
+        FROM users 
+        WHERE username = 'Cain33'okSELECT * 
+        FROM users 
+        WHERE username = 'Cain33'okSELECT * 
+        FROM users 
+        WHERE username = 'Cain33'okSELECT * 
+        FROM users 
+        WHERE username = 'Cain33'okSELECT * 
+        FROM users 
+        WHERE username = 'Cain33'ok

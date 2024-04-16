@@ -1,16 +1,21 @@
 <?php
-	class connect{
-		public static function con(){
-			$host = 'localhost';  
-    		$user = "root";                     
-    		$pass = "";                             
-    		$db = "zenithzone";                      
-    		$port = 3306;                           
-    		
-    		$conexion = mysqli_connect($host, $user, $pass, $db, $port)or die(mysql_error());
-			return $conexion;
-		}
-		public static function close($conexion){
-			mysqli_close($conexion);
-		}
+class connect
+{
+	public static function con()
+	{
+
+		$connect = parse_ini_file('credentials.ini');
+		$host = $connect['BD_HOST'];
+		$user = $connect['BD_USER'];
+		$pass = "";
+		$db = $connect['BD_DB'];
+		$port = $connect['BD_PORT'];
+
+		$conexion = mysqli_connect($host, $user, $pass, $db, $port) or die(mysql_error());
+		return $conexion;
 	}
+	public static function close($conexion)
+	{
+		mysqli_close($conexion);
+	}
+}

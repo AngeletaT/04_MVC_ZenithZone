@@ -92,32 +92,41 @@ function updateFiltersShop(codeKey, value) {
 }
 
 function autocomplete() {
-	// console.log("autocomplete")
+	console.log("autocomplete")
+	let search = {
+		type: null,
+		activity: null,
+		complete: null,
+	}
 	$("#search_text").on("keyup", function () {
-		let sdata = {complete: $(this).val()}
+		search.complete = $(this).val()
+		// console.log("search:", search)
 		// Valor de type existe
 		if ($("#search_type").val() != null) {
-			sdata.type = $("#search_type").val()
+			search.type = $("#search_type").val()
 			// Valor de type y activity existe
 			if ($("#search_type").val() != null && $("#search_activity").val() != null) {
-				sdata.activity = $("#search_activity").val()
+				search.activity = $("#search_activity").val()
 			}
 			// Valor de type no existe y activity existe
-		} else if ($("#search_type").val() == undefined && $("#search_activity").val() != null) {
-			sdata.activity = $("#search_activity").val()
+		} else if ($("#search_type").val() == null && $("#search_activity").val() != null) {
+			search.activity = $("#search_activity").val()
 		}
 
-		console.log(sdata)
-		ajaxPromise("module/search/controller/controller_search.php?op=autocomplete", "POST", "JSON", sdata)
+		console.log(search)
+		ajaxPromise("module/search/controller/controller_search.php?op=autocomplete", "POST", "JSON", {"search": search})
 			.then(function (data) {
-				// console.log("autocompletepromise")
-				// console.log(data)
+				console.log("autocompletepromise")
+				console.log(data)
 				$("#search_auto").empty()
 				$("#search_auto").fadeIn(500)
-				if (data.length == 0) {
+				if (data == "error") {
 					$("<div></div>", {
 						"class": "searchElement",
 						"text": "No existen datos",
+						"click": function () {
+							return false
+						},
 					}).appendTo("#search_auto")
 				} else {
 					for (row in data) {
@@ -131,22 +140,33 @@ function autocomplete() {
 				}
 			})
 			.catch(function (e) {
-				console.error("Peta el post")
 				console.log(e)
 				$("#search_auto").fadeOut(500)
 			})
 	})
 	$(document).on("click", ".searchElement", function () {
-		$("#search_text").val(this.id)
+		$("#search_text").val(this.textContent)
+		localStorage.setItem("filter_location", this.id)
+		updateFiltersShop("code_city", this.id)
 		$("#search_auto").fadeOut(1000)
+	})
+
+	$("#search_type").on("change", function () {
+		$("#search_text").val("")
+		search.complete = null
+		$("#search_auto").fadeOut(10)
+	})
+
+	$("#search_activity").on("change", function () {
+		$("#search_text").val("")
+		search.complete = null
+		$("#search_auto").fadeOut(10)
 	})
 }
 
 function button_search() {
 	$("#search_button").on("click", function () {
-		// console.log("Button search");
-		// return false;
-
+		console.log("Button search")
 		setTimeout(function () {
 			window.location.href = "index.php?page=controller_shop&op=list"
 		}, 1000)

@@ -10,22 +10,25 @@ function login() {
 
 		ajaxPromise("module/login/controller/controller_login.php?op=login", "POST", "JSON", data)
 			.then(function (result) {
-				// AQUI NO ENTRA POR PROBLEMAS EN EL PASS VERIFY
-				console.log("Dentro del then", result)
+				// console.log("Dentro del then", result)
 				if (result == "error_username") {
 					document.getElementById("error_username_log").innerHTML =
 						"The user does not exist, make sure you have written it correctly"
 				} else if (result == "error_passwd") {
 					document.getElementById("error_passwd_log").innerHTML = "The password is incorrect"
 				} else {
-					// localStorage.setItem("token", result)
+					localStorage.setItem("token", result)
+					console.log("token", result)
 					toastr.success("Loged succesfully")
+					// Mostrar el perfil del usuario
 					document.getElementById("login-form").style.display = "none"
-					document.getElementById("login-profile").style.display = "block"
-					document.getElementById("username").innerHTML = result
+					// document.getElementById("login-profile").style.display = "block"
+					// PARA HACER EL PROFILE
+					// document.getElementById("username").innerHTML = result.username
+					// document.getElementById("avatar").src = result.avatar
 
 					// if (localStorage.getItem("redirect_like")) {
-					// setTimeout(' window.location.href = "index.php?module=ctrl_shop&op=list"; ', 1000)
+					setTimeout(' window.location.href = "index.php?module=ctrl_shop&op=list"; ', 500)
 					// } else {
 					// setTimeout(' window.location.href = "index.php?module=ctrl_home&op=list"; ', 1000)
 					// }

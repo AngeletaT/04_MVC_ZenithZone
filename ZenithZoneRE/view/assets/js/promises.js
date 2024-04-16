@@ -21,72 +21,83 @@ function ajaxPromise(sUrl, sType, sTData, sData = undefined) {
 
 //================LOAD-HEADER================
 function load_menu() {
-    var token = localStorage.getItem('token');
-    if (token) {
-        ajaxPromise('module/login/ctrl/ctrl_login.php?op=data_user', 'POST', 'JSON', { 'token': token })
-            .then(function(data) {
-                if (data.type_user == "client") {
-                    console.log("Client loged");
-                    $('.opc_CRUD').empty();
-                    $('.opc_exceptions').empty();
-                } else {
-                    console.log("Admin loged");
-                    $('.opc_CRUD').show();
-                    $('.opc_exceptions').show();
-                }
-                $('.log-icon').empty();
-                $('#user_info').empty();
-                $('<img src="' + data.avatar + '"alt="Robot">').appendTo('.log-icon');
-                $('<p></p>').attr({ 'id': 'user_info' }).appendTo('#des_inf_user')
-                    .html(
-                        '<a id="logout"><i id="icon-logout" class="fa-solid fa-right-from-bracket"></i></a>' +
-                        '<a>' + data.username + '<a/>'
+	var token = localStorage.getItem("token")
+	if (token) {
+		ajaxPromise("module/login/controller/controller_login.php?op=data_user", "POST", "JSON", {"token": token})
+			.then(function (data) {
+				console.log(data)
+				// if (data.type_user == "client") {
+				// 	console.log("Client loged")
+				// 	$(".opc_CRUD").empty()
+				// 	$(".opc_exceptions").empty()
+				// } else {
+				// 	console.log("Admin loged")
+				// 	$(".opc_CRUD").show()
+				// 	$(".opc_exceptions").show()
+				// }
+				$(".loginbutton").hide()
+				$(".loginbutton").text("Logout")
+				$(".loginbutton").attr("id", "logout")
+				$(".loginbutton").addClass("Button_red")
+				if (data.avatar) {
+					$(".useravatar").show()
+					$(".useravatar").attr("src", data.avatar)
+				}
+				$(".loginbutton").show()
+			})
+			.catch(function (e) {
+				console.error("Catch error: ", e)
+				// window.location.href = "index.php?module=ctrl_exceptions&op=503&type=503&lugar=Function ajxForSearch SHOP";
+			})
+	} else {
+		console.log("No hay token disponible")
+		$(".useravatar").hide()
 
-                    )
-
-            }).catch(function() {
-                console.log("Error al cargar los datos del user");
-            });
-    } else {
-        console.log("No hay token disponible");
-        $('.opc_CRUD').empty();
-        $('.opc_exceptions').empty();
-        $('#user_info').hide();
-        $('.log-icon').empty();
-        $('<a href="index.php?module=ctrl_login&op=login-register_view"><i id="col-ico" class="fa-solid fa-user fa-2xl"></i></a>').appendTo('.log-icon');
-    }
+		// $(".opc_CRUD").empty()
+		// $(".opc_exceptions").empty()
+		// $("#user_info").hide()
+		// $(".log-icon").empty()
+		// $(
+		// 	'<a href="index.php?module=ctrl_login&op=login-register_view"><i id="col-ico" class="fa-solid fa-user fa-2xl"></i></a>'
+		// ).appendTo(".log-icon")
+	}
 }
 
-//================CLICK-LOGIUT================
+//================CLICK-LOGOUT================
 function click_logout() {
-    $(document).on('click', '#logout', function() {
-        localStorage.removeItem('total_prod');
-        toastr.success("Logout succesfully");
-        setTimeout('logout(); ', 1000);
-    });
+	$(document).on("click", "#logout", function () {
+		// localStorage.removeItem("offset")
+		logout()
+		toastr.success("Logout succesfully")
+		setTimeout("logout(); ", 1000)
+	})
 }
 
 //================LOG-OUT================
 function logout() {
-    ajaxPromise('module/login/ctrl/ctrl_login.php?op=logout', 'POST', 'JSON')
-        .then(function(data) {
-            localStorage.removeItem('token');
-            window.location.href = "index.php?module=ctrl_home&op=list";
-        }).catch(function() {
-            console.log('Something has occured');
-        });
+	ajaxPromise("module/login/controller/controller_login.php?op=logout", "POST", "JSON")
+		.then(function (data) {
+			console.log("Borrando token")
+			localStorage.removeItem("token")
+			$(".useravatar").hide()
+			window.location.href = "index.php?module=controller_home&op=list"
+		})
+		.catch(function (e) {
+			console.error("Catch error: ", e)
+			// window.location.href = "index.php?module=ctrl_exceptions&op=503&type=503&lugar=Function ajxForSearch SHOP";
+		})
 }
 
 // Remove localstorage('page') with click in shop
-function click_shop() {
-    $(document).on('click', '#opc_shop', function() {
-        localStorage.removeItem('page');
-        localStorage.removeItem('total_prod');
-    });
-}
+// function click_shop() {
+// 	$(document).on("click", "#opc_shop", function () {
+// 		localStorage.removeItem("page")
+// 		localStorage.removeItem("total_prod")
+// 	})
+// }
 
-$(document).ready(function() {
-    load_menu();
-    click_logout();
-    click_shop();
-});
+$(document).ready(function () {
+	load_menu()
+	click_logout()
+	// click_shop()
+})

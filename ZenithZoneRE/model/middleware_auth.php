@@ -1,9 +1,10 @@
 <?php
 include ("c:/xampp/htdocs/angela/ZenithZoneRE/model/JWT.php");
 
-function decode_token($token){
-    $jwt = parse_ini_file('jwt.ini');
-    $secret = $jwt['secret'];
+function decode_token($token)
+{
+    $jwt = parse_ini_file('credentials.ini');
+    $secret = $jwt['JWT_SECRET'];
 
     $JWT = new JWT;
     $token_dec = $JWT->decode($token, $secret);
@@ -12,10 +13,11 @@ function decode_token($token){
     return $rt_token["username"];
 }
 
-function create_token($username){
-    $jwt = parse_ini_file('jwt.ini');
-    $header = $jwt['header'];
-    $secret = $jwt['secret'];
+function create_token($username)
+{
+    $jwt = parse_ini_file('credentials.ini');
+    $header = $jwt['JWT_HEADER'];
+    $secret = $jwt['JWT_SECRET'];
     $payload = '{"iat":"' . time() . '","exp":"' . time() + (600) . '","username":"' . $username . '"}';
 
     $JWT = new JWT;

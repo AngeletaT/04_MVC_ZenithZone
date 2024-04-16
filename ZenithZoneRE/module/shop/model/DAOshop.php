@@ -118,7 +118,7 @@ class DAOshop
         $sql .= " ORDER BY p.code_prop ASC
         LIMIT $offset, $items_page";
 
-        error_log($sql, 3, "debug.txt");
+        // error_log($sql, 3, "debug.txt");
 
         $conexion = connect::con();
         $res = mysqli_query($conexion, $sql);
@@ -185,9 +185,9 @@ class DAOshop
                 $sql .= " AND a.$filterColumn = $filterValue";
             }
         }
-        $sql .= "LIMIT $offset, $items_page";
+        $sql .= " LIMIT $offset, $items_page";
 
-        error_log($sql, 3, "debug.txt");
+        // error_log($sql, 3, "debug.txt");
 
         $conexion = connect::con();
         $res = mysqli_query($conexion, $sql);
@@ -209,8 +209,8 @@ class DAOshop
         }
         connect::close($conexion);
 
-        error_log("El resultado de la consulta es:", 3, "debug.txt");
-        error_log($res, 3, "debug.txt");
+        // error_log("El resultado de la consulta es:", 3, "debug.txt");
+        // error_log($res, 3, "debug.txt");
 
         return $retrArray;
     }

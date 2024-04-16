@@ -1,10 +1,10 @@
 function loadprops() {
 	// ajaxForSearch("module/shop/controller/controller_shop.php?op=all_prop");
-	// console.log("loadprops");
+	console.log("loadprops")
 	var filters_home = JSON.parse(localStorage.getItem("filters_home")) || false
 	var filters_details = JSON.parse(localStorage.getItem("filters_details")) || false
 	var filters_shop = JSON.parse(localStorage.getItem("filters_shop")) || false
-	// var filters_search = JSON.parse(localStorage.getItem("filters_search")) || false
+	// var filters_search = JSON.parse(localStorage.getItem("filters_search")) || false (funciona con filters_Shop)
 
 	if (filters_home !== false) {
 		ajaxForSearch("module/shop/controller/controller_shop.php?op=filters_home")
@@ -13,44 +13,35 @@ function loadprops() {
 		loadDetails(filters_details[0].property[0])
 	} else if (filters_shop !== false) {
 		ajaxForSearch_Shop("module/shop/controller/controller_shop.php?op=filters_shop")
-		// console.log("filtershop");
+		// console.log("filtershop")
 		highlight_filters()
 		// pagination()
-		// } else if (filters_search !== false) {
-		// 	ajaxForSearch("module/shop/controller/controller_shop.php?op=filters_search")
-		// 	// console.log("filterssearch");
 	} else {
 		ajaxForSearch("module/shop/controller/controller_shop.php?op=all_prop")
+		console.log("allprop")
 	}
+	pagination()
 }
 
 // #region AJAX
 // FUNCION QUE LLAMA A SALTO HOME
-function ajaxForSearch(url, offset = 0, items_page = 2) {
+function ajaxForSearch(url, items_page = 2) {
 	var filters_home = JSON.parse(localStorage.getItem("filters_home"))
 	localStorage.removeItem("filters_home")
-	// console.log(filters_home);
-	console.log("offset es:", offset)
+	console.log("filters home:", filters_home)
+	console.log(url)
 
-	if (offset != 0) {
-		if (localStorage.getItem("id")) {
-			var move_id = JSON.parse(localStorage.getItem("id"))
-		}
-		localStorage.setItem("move", JSON.stringify(offset))
-	} else {
-		if (localStorage.getItem("move")) {
-			offset = JSON.parse(localStorage.getItem("move"))
-			if (localStorage.getItem("id")) {
-				var move_id = JSON.parse(localStorage.getItem("id"))
-			}
-		}
-		localStorage.setItem("move", JSON.stringify(0))
-		
+	var page = 1
+	if (localStorage.getItem("page")) {
+		page = parseInt(localStorage.getItem("page"))
 	}
+
+	var offset = (page - 1) * items_page
+	// console.log(offset)
 
 	ajaxPromise(url, "POST", "JSON", {"filters_home": filters_home, "offset": offset, "items_page": items_page})
 		.then(function (data) {
-			console.log("Los datos del AjaxForSearch:", data)
+			// console.log("Los datos del AjaxForSearch:", data)
 			$("#content_shop_prop").empty()
 			$(".date_img" && ".date_prop").empty()
 			$("#mapdet").hide()
@@ -148,26 +139,19 @@ function ajaxForSearch(url, offset = 0, items_page = 2) {
 }
 
 // FUNCION QUE LLAMA A CARGAR SHOP
-function ajaxForSearch_Shop(url, offset = 0, items_page = 2) {
+function ajaxForSearch_Shop(url, items_page = 2) {
 	var filters_shop = JSON.parse(localStorage.getItem("filters_shop"))
 	// console.log(filters_shop)
 
 	console.log("offset es:", offset)
 
-	if (offset != 0) {
-		if (localStorage.getItem("id")) {
-			var move_id = JSON.parse(localStorage.getItem("id"))
-		}
-		localStorage.setItem("move", JSON.stringify(offset))
-	} else {
-		if (localStorage.getItem("move")) {
-			offset = JSON.parse(localStorage.getItem("move"))
-			if (localStorage.getItem("id")) {
-				var move_id = JSON.parse(localStorage.getItem("id"))
-			}
-		}
-		localStorage.setItem("move", JSON.stringify(offset))
+	var page = 1
+	if (localStorage.getItem("page")) {
+		page = parseInt(localStorage.getItem("page"))
 	}
+
+	var offset = (page - 1) * items_page
+	console.log(offset)
 
 	ajaxPromise(url, "POST", "JSON", {"filters_shop": filters_shop, "offset": offset, "items_page": items_page})
 		.then(function (data) {
@@ -1062,13 +1046,14 @@ function load_map_details(code_prop) {
 // #region PAGINACION
 // PAGINACION
 function pagination() {
-	console.log("pagination")
+	// console.log("pagination")
 	var filters_home = JSON.parse(localStorage.getItem("filters_home")) || false
 	var filters_shop = JSON.parse(localStorage.getItem("filters_shop")) || false
-	if (filters_home) {
+	if (filters_home !== false) {
 		var url = "module/shop/controller/controller_shop.php?op=count_home"
+		console.log("filters_home url pag", url)
 		var filter = filters_home
-	} else if (filters_shop) {
+	} else if (filters_shop !== false) {
 		var url = "module/shop/controller/controller_shop.php?op=count_shop"
 		var filter = filters_shop
 	} else {
@@ -1076,15 +1061,11 @@ function pagination() {
 		var filter = undefined
 	}
 	ajaxPromise(url, "POST", "JSON", {"filters_home": filters_home, "filters_shop": filters_shop}).then(function (data) {
-		console.log("dentro de then pagination", data)
-		var offset = data[0].contador
-
-		if (offset >= 2) {
-			total_pages = Math.ceil(offset / 2)
-		} else {
-			total_pages = 1
-		}
-		console.log("Hay estas paginas", total_pages)
+		// console.log("dentro de then pagination", data)
+		var total_items = data[0].contador
+		var items_page = 2
+		var total_pages = Math.ceil(total_items / items_page)
+		// console.log("Hay estas paginas", total_pages)
 
 		var paginationContainer = document.getElementById("pagination")
 		paginationContainer.innerHTML = ""
@@ -1095,18 +1076,14 @@ function pagination() {
 			button.classList.add("buttonpagination")
 			button.innerHTML = i
 			button.addEventListener("click", function () {
-				let page = this.id
-				offset = 2 * (page - 1)
-				console.log("El page es", page)
-				console.log("El offset es", offset)
-				console.log("Filter es:", filter)
-				if (filter != undefined) {
-					ajaxForSearch_Shop("module/shop/controller/controller_shop.php?op=filters_shop", filters_shop, offset, 2)
-				} else {
-					ajaxForSearch("module/shop/controller/controller_shop.php?op=shopAll", offset, 2)
-				}
-				$("html, body").animate({scrollTop: $(".wrap")})
+				let page = parseInt(this.id)
+				let offset = (page - 1) * items_page // Calculamos el offset en función del número de página
+				localStorage.setItem("page", page)
+				// console.log("El page es", page)
+				// console.log("El offset es", offset)
+				// console.log("Filter es:", filter)
 				location.reload()
+				$("html, body").animate({scrollTop: $(".wrap")})
 			})
 			paginationContainer.appendChild(button)
 		}
