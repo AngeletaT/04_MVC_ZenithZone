@@ -110,4 +110,28 @@ SELECT *
         FROM users 
         WHERE username = 'Cain33'okSELECT * 
         FROM users 
-        WHERE username = 'Cain33'ok
+        WHERE username = 'Cain33'okeyJ0eXAiOiJKV1QiLCAiYWxnIjoiSFMyNTYifQ.eyJpYXQiOiIxNzEzMzc5Nzc5IiwiZXhwIjoiMTcxMzM4MDM3OSIsInVzZXJuYW1lIjoiU2FsdmEzMiJ9.nHsNrosWgy-D5fvqiBlQvPGyveSy4EAxK4VSpPNuwzweyJ0eXAiOiJKV1QiLCAiYWxnIjoiSFMyNTYifQ.eyJpYXQiOiIxNzEzMzc5ODgyIiwiZXhwIjoiMTcxMzM4MDQ4MiIsInVzZXJuYW1lIjoiU2FsdmEzMiJ9.xmlRRvv0RHTfiSM-RHWHUIuFhq1igpYQJM-RHSrUH2MSELECT * 
+        FROM users 
+        WHERE username = 'Salva32'okSELECT * 
+        FROM users 
+        WHERE username = 'Salva32'okeyJ0eXAiOiJKV1QiLCAiYWxnIjoiSFMyNTYifQ.eyJpYXQiOiIxNzEzMzgyNDc0IiwiZXhwIjoiMTcxMzM4MzA3NCIsInVzZXJuYW1lIjoiU2FsdmEzMiJ9.M5V1DnLo_XbpmLrtfI6hpEWM1dipl0SfjU58J_JCibASELECT * 
+        FROM users 
+        WHERE username = 'Salva32'okSELECT * 
+        FROM users 
+        WHERE username = 'Salva32'okSELECT * 
+        FROM users 
+        WHERE username = 'Salva32'okeyJ0eXAiOiJKV1QiLCAiYWxnIjoiSFMyNTYifQ.eyJpYXQiOiIxNzEzMzgzMTY5IiwiZXhwIjoiMTcxMzM4MzIyOSIsInVzZXJuYW1lIjoiU2FsdmEzMiJ9.kNE4QFDNJo767V-Y23_pdEDpl0leD_HiDOrIl-WsuqMeyJ0eXAiOiJKV1QiLCAiYWxnIjoiSFMyNTYifQ.eyJpYXQiOiIxNzEzMzgzNDAwIiwiZXhwIjoiMTcxMzM4MzQ2MCIsInVzZXJuYW1lIjoiQ2FpbjMzIn0.Ghz1yexxaez1k7I-qBPw00ohiUsaUIS5omicESGazqUSELECT * 
+        FROM users 
+        WHERE username = 'Salva32'okSELECT * 
+        FROM users 
+        WHERE username = 'Salva32'okerror_passwdSELECT * 
+        FROM users 
+        WHERE username = 'Salva32'okSELECT * 
+        FROM users 
+        WHERE username = 'Salva32'okSELECT * 
+        FROM users 
+        WHERE username = 'Salva32'okSELECT * 
+        FROM users 
+        WHERE username = 'Salva32'okSELECT * 
+        FROM users 
+        WHERE username = 'Salva32'ok

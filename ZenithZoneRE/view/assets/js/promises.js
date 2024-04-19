@@ -21,9 +21,11 @@ function ajaxPromise(sUrl, sType, sTData, sData = undefined) {
 
 //================LOAD-HEADER================
 function load_menu() {
-	var token = localStorage.getItem("token")
-	if (token) {
-		ajaxPromise("module/login/controller/controller_login.php?op=data_user", "POST", "JSON", {"token": token})
+	var acces_token = localStorage.getItem("acces_token")
+	if (acces_token) {
+		ajaxPromise("module/login/controller/controller_login.php?op=data_user", "POST", "JSON", {
+			"acces_token": acces_token,
+		})
 			.then(function (data) {
 				console.log(data)
 				// if (data.type_user == "client") {
@@ -50,7 +52,7 @@ function load_menu() {
 				// window.location.href = "index.php?module=ctrl_exceptions&op=503&type=503&lugar=Function ajxForSearch SHOP";
 			})
 	} else {
-		console.log("No hay token disponible")
+		console.log("No hay acces_token disponible")
 		$(".useravatar").hide()
 
 		// $(".opc_CRUD").empty()
@@ -77,8 +79,10 @@ function click_logout() {
 function logout() {
 	ajaxPromise("module/login/controller/controller_login.php?op=logout", "POST", "JSON")
 		.then(function (data) {
-			console.log("Borrando token")
-			localStorage.removeItem("token")
+			console.log("Borrando acces_token")
+			localStorage.removeItem("acces_token")
+			localStorage.removeItem("refresh_token")
+			toastr.warning("The account has been closed for security!!")
 			$(".useravatar").hide()
 			window.location.href = "index.php?module=controller_home&op=list"
 		})

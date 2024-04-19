@@ -34,7 +34,7 @@ function load_activity_search(type) {
 				// window.location.href = "index.php?module=ctrl_exceptions&op=503&type=503&lugar=Print_Dynamic_Filters SHOP";
 			})
 	} else {
-		console.log(type)
+		// console.log(type)
 		ajaxPromise("module/search/controller/controller_search.php?op=search_activity", "POST", "JSON", type)
 			.then(function (data) {
 				// console.log(data)
@@ -92,7 +92,7 @@ function updateFiltersShop(codeKey, value) {
 }
 
 function autocomplete() {
-	console.log("autocomplete")
+	// console.log("autocomplete")
 	let search = {
 		type: null,
 		activity: null,
@@ -116,8 +116,8 @@ function autocomplete() {
 		console.log(search)
 		ajaxPromise("module/search/controller/controller_search.php?op=autocomplete", "POST", "JSON", {"search": search})
 			.then(function (data) {
-				console.log("autocompletepromise")
-				console.log(data)
+				// console.log("autocompletepromise")
+				// console.log(data)
 				$("#search_auto").empty()
 				$("#search_auto").fadeIn(500)
 				if (data == "error") {
@@ -166,7 +166,7 @@ function autocomplete() {
 
 function button_search() {
 	$("#search_button").on("click", function () {
-		console.log("Button search")
+		// console.log("Button search")
 		setTimeout(function () {
 			window.location.href = "index.php?page=controller_shop&op=list"
 		}, 1000)

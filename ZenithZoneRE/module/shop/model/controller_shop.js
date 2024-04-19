@@ -8,6 +8,7 @@ function loadprops() {
 
 	if (filters_home !== false) {
 		ajaxForSearch("module/shop/controller/controller_shop.php?op=filters_home")
+		pagination()
 	} else if (filters_details !== false) {
 		// console.log(filters_details[0].property[0]);
 		loadDetails(filters_details[0].property[0])
@@ -20,7 +21,6 @@ function loadprops() {
 		ajaxForSearch("module/shop/controller/controller_shop.php?op=all_prop")
 		console.log("allprop")
 	}
-	pagination()
 }
 
 // #region AJAX
@@ -29,7 +29,7 @@ function ajaxForSearch(url, items_page = 2) {
 	var filters_home = JSON.parse(localStorage.getItem("filters_home"))
 	localStorage.removeItem("filters_home")
 	console.log("filters home:", filters_home)
-	console.log(url)
+	// console.log(url)
 
 	var page = 1
 	if (localStorage.getItem("page")) {
@@ -74,7 +74,7 @@ function ajaxForSearch(url, items_page = 2) {
 								</td>
                             </tr>
                             <tr>
-								<td colspan="8">${data[row].name_prop}</td>
+								<td colspan="8"><h5>${data[row].name_prop}</h5</td>
 							</tr>
 							<tr>
 								<td colspan="8">${data[row].description}</td>
@@ -175,49 +175,49 @@ function ajaxForSearch_Shop(url, items_page = 2) {
 					$("<div></div>").attr({"id": data[row].code_prop, "class": "propertytable"}).appendTo("#content_shop_prop")
 						.html(`
                         <table>
-						<tr>
+                            <tr>
 								<td rowspan="7" class="imagen">
                 				    <div class="owl-container imagen shop">
-									<div class="owl-list owl-carousel owl-theme imagen shop">
-									${carousel}
-									</div>
+                				        <div class="owl-list owl-carousel owl-theme imagen shop">
+                				            ${carousel}
+                				        </div>
                 				    </div>
-									</td>
-									<td colspan="8"><a class="titlelist" id="${data[row].code_prop}">
+                				</td>
+                                <td colspan="8"><a class="titlelist" id="${data[row].code_prop}">
 									<h2>${data[row].price
 										.toString()
 										.replace(/\B(?=(\d{3})+(?!\d))/g, ".")}&nbsp;<i class="fa-solid fa-euro-sign"></i></h2></a>
-										</td>
-										</tr>
-                            <tr>
-							<td colspan="8">${data[row].name_prop}</td>
-							</tr>
-							<tr>
-							<td colspan="8">${data[row].description}</td>
-							</tr>
-                            <tr>
-							<td class="icon"><i class="fa-solid fa-bed fa-xl"></i></td>
-							<td class="text">${data[row].rooms}</td>
-							<td class="icon"><i class="fa-solid fa-bath fa-xl"></i></td>
-							<td class="text">${data[row].baths}</td>
-							<td class="icon"><i class="fa-solid fa-key fa-xl"></i></td>
-							<td class="text">${data[row].name_cat}</td>
+								</td>
                             </tr>
                             <tr>
-							<td class="icon"><i class="fa-solid fa-expand fa-xl"></i></td>
-							<td class="text">${data[row].m2}</td>
-							<td class="icon"><i class="fa-solid fa-location-dot fa-xl"></i></td>
-							<td class="text">${data[row].name_city}</td>
-							<td class="icon"><i class="fa-solid fa-plus fa-xl"></i></td>
-							<td class="text">${data[row].name_extra}</td>
+								<td colspan="8"><h5>${data[row].name_prop}<h5></td>
+							</tr>
+							<tr>
+								<td colspan="8">${data[row].description}</td>
+							</tr>
+                            <tr>
+								<td class="icon"><i class="fa-solid fa-bed fa-xl"></i></td>
+								<td class="text">${data[row].rooms}</td>
+								<td class="icon"><i class="fa-solid fa-bath fa-xl"></i></td>
+								<td class="text">${data[row].baths}</td>
+								<td class="icon"><i class="fa-solid fa-key fa-xl"></i></td>
+								<td class="text">${data[row].name_cat}</td>
+                            </tr>
+                            <tr>
+								<td class="icon"><i class="fa-solid fa-expand fa-xl"></i></td>
+								<td class="text">${data[row].m2}</td>
+								<td class="icon"><i class="fa-solid fa-location-dot fa-xl"></i></td>
+								<td class="text">${data[row].name_city}</td>
+								<td class="icon"><i class="fa-solid fa-plus fa-xl"></i></td>
+								<td class="text">${data[row].name_extra}</td>
                             </tr>
 							<tr>
-							<td colspan='8'>
-							<button id='${data[row].code_prop}' class='more_info_list Button_principal'>More Info</button>
-							</td>
+								<td colspan='8'>
+									<button id='${data[row].code_prop}' class='more_info_list Button_principal'>More Info</button>
+								</td>
 							</tr>
-							</table>
-							`)
+						</table>
+					`)
 				}
 
 				$(".owl-list").owlCarousel({
@@ -259,6 +259,7 @@ function clicks() {
 		localStorage.setItem("code_prop", code_prop)
 		// console.log(code_prop);
 		loadDetails(code_prop)
+		loadSuggestionsDetails()
 	})
 }
 
@@ -374,6 +375,49 @@ function loadDetails(code_prop) {
 			// window.location.href = "index.php?module=ctrl_exceptions&op=503&type=503&lugar=Load_Details SHOP";
 		})
 }
+
+var limit = 3
+function loadSuggestionsDetails() {
+	console.log("loadSuggestionsDetails")
+	ajaxPromise("module/shop/controller/controller_shop.php?op=scroll_details", "POST", "JSON", {
+		"limit": limit,
+		"code_prop": localStorage.getItem("code_prop"),
+	})
+		.then(function (sdata) {
+			console.log("then:", sdata)
+			$('<h2 class="cat">Properties related</h2>').appendTo("#title-suggestions")
+
+			if (sdata.length >= limit) {
+				$('<button class="load_more_button Button_principal" id="load_more_props">LOAD MORE</button>').appendTo(
+					"#button-suggestions"
+				)
+			}
+
+			for (row in sdata) {
+				$("<div></div>").attr({class: "cardtypeproperty detai"}).appendTo("#suggestions").html(`
+				<img src=${sdata[row].img_prop} alt='foto'/>
+				<div class='card-content'>
+				<h2>${sdata[row].name_prop}</h2>
+				<a class='button clicksuggest' id="${sdata[row].code_prop}">Find out more<i class='bi bi-arrow-right'></i></a>
+				</div>
+				`)
+			}
+			// localStorage.removeItem("code_prop")
+		})
+		.catch(function (error) {
+			console.error(error)
+			// window.location.href = "index.php?module=ctrl_exceptions&op=503&type=503&lugar=Load_Suggestions_Details SHOP";
+		})
+}
+
+$(document).on("click", "#load_more_props", function () {
+	limit += 3
+	console.log("limit:", limit)
+	$("#title-suggestions").empty()
+	$("#button-suggestions").empty()
+	$("#suggestions").empty()
+	loadSuggestionsDetails()
+})
 
 // #region FILTROS
 // FUNCION QUE IMPRIME LOS FILTROS
@@ -1046,38 +1090,57 @@ function load_map_details(code_prop) {
 // #region PAGINACION
 // PAGINACION
 function pagination() {
-	// console.log("pagination")
+	console.log("pagination")
 	var filters_home = JSON.parse(localStorage.getItem("filters_home")) || false
+	console.log("filters_home", filters_home)
 	var filters_shop = JSON.parse(localStorage.getItem("filters_shop")) || false
 	if (filters_home !== false) {
 		var url = "module/shop/controller/controller_shop.php?op=count_home"
-		console.log("filters_home url pag", url)
-		var filter = filters_home
 	} else if (filters_shop !== false) {
 		var url = "module/shop/controller/controller_shop.php?op=count_shop"
-		var filter = filters_shop
 	} else {
 		var url = "module/shop/controller/controller_shop.php?op=count"
-		var filter = undefined
 	}
 	ajaxPromise(url, "POST", "JSON", {"filters_home": filters_home, "filters_shop": filters_shop}).then(function (data) {
-		// console.log("dentro de then pagination", data)
+		console.log("dentro de then pagination", data)
 		var total_items = data[0].contador
 		var items_page = 2
 		var total_pages = Math.ceil(total_items / items_page)
-		// console.log("Hay estas paginas", total_pages)
+		console.log("Hay estas paginas", total_pages)
+		var currentPage = parseInt(localStorage.getItem("page")) || 1
 
 		var paginationContainer = document.getElementById("pagination")
 		paginationContainer.innerHTML = ""
 
+		if (currentPage > 1) {
+			let firstPageButton = document.createElement("button")
+			firstPageButton.innerHTML = "<<"
+			firstPageButton.classList.add("buttonpagination")
+			firstPageButton.addEventListener("click", function () {
+				localStorage.setItem("page", 1)
+				location.reload()
+			})
+			paginationContainer.appendChild(firstPageButton)
+
+			let prevButton = document.createElement("button")
+			prevButton.innerHTML = "<"
+			prevButton.classList.add("buttonpagination")
+			prevButton.addEventListener("click", function () {
+				localStorage.setItem("page", currentPage - 1)
+				location.reload()
+			})
+			paginationContainer.appendChild(prevButton)
+		}
+
 		for (let i = 1; i <= total_pages; i++) {
+			if (i < currentPage - 1 || i > currentPage + 1) continue
 			let button = document.createElement("button")
 			button.id = i
 			button.classList.add("buttonpagination")
 			button.innerHTML = i
 			button.addEventListener("click", function () {
 				let page = parseInt(this.id)
-				let offset = (page - 1) * items_page // Calculamos el offset en función del número de página
+				let offset = (page - 1) * items_page
 				localStorage.setItem("page", page)
 				// console.log("El page es", page)
 				// console.log("El offset es", offset)
@@ -1086,6 +1149,26 @@ function pagination() {
 				$("html, body").animate({scrollTop: $(".wrap")})
 			})
 			paginationContainer.appendChild(button)
+		}
+
+		if (currentPage < total_pages) {
+			let nextButton = document.createElement("button")
+			nextButton.innerHTML = ">"
+			nextButton.classList.add("buttonpagination")
+			nextButton.addEventListener("click", function () {
+				localStorage.setItem("page", currentPage + 1)
+				location.reload()
+			})
+			paginationContainer.appendChild(nextButton)
+
+			let lastPageButton = document.createElement("button")
+			lastPageButton.innerHTML = ">>"
+			lastPageButton.classList.add("buttonpagination")
+			lastPageButton.addEventListener("click", function () {
+				localStorage.setItem("page", total_pages)
+				location.reload()
+			})
+			paginationContainer.appendChild(lastPageButton)
 		}
 	})
 }

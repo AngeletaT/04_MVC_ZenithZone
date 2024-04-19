@@ -1,5 +1,9 @@
 <?php
 include ("c:/xampp/htdocs/angela/ZenithZoneRE/module/shop/model/DAOshop.php");
+@session_start();
+if (isset($_SESSION["tiempo"])) {
+    $_SESSION["tiempo"] = time(); //Devuelve la fecha actual
+}
 
 switch ($_GET['op']) {
     case 'list':
@@ -225,16 +229,20 @@ switch ($_GET['op']) {
         }
         break;
 
+    case 'scroll_details';
+        // echo json_encode("scroll_details");
+        try {
+            $daoshop = new DAOshop();
+            $datos_prop = $daoshop->scroll_details($_POST['limit'], $_POST['code_prop']);
+        } catch (Exception $e) {
+            echo json_encode("error");
+        }
 
-    // IN PROGRESS
-    case 'count_search';
-        // $daoshop = new DAO_shop();
-        // $datos_prop = $daoshop->count_search($_POST['filters_search']);
-        // if (!empty($datos_prop)) {
-        //     echo json_encode($datos_prop);
-        // } else {
-        //     echo "error";
-        // }
+        if (!empty($datos_prop)) {
+            echo json_encode($datos_prop);
+        } else {
+            echo json_encode("error");
+        }
         break;
 
     default;

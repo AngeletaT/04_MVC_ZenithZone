@@ -1,6 +1,7 @@
 <?php
 include ("c:/xampp/htdocs/angela/ZenithZoneRE/module/login/model/DAOlogin.php");
 include ("c:/xampp/htdocs/angela/ZenithZoneRE/model/middleware_auth.php");
+@session_start();
 
 switch ($_GET['op']) {
     case 'list':
@@ -60,14 +61,13 @@ switch ($_GET['op']) {
 
             if (password_verify($_POST['password'], $user['password'])) {
                 // echo json_encode("hola");
-                $token = create_token($user["username"]);
-                // $_SESSION['username'] = $user['username']; //Guardamos el usario 
-                // $_SESSION['tiempo'] = time(); //Guardamos el tiempo que se logea
-                error_log($token, 3, "debuglogin.txt");
-                echo json_encode($token);
-                // PARA EL PROFILE
-                // echo json_encode(array('username' => $user['username'], 'avatar' => $user['avatar']));
-                // error_log("ok", 3, "debuglogin.txt");
+                $acces_token = create_token($user["username"]);
+                $refresh_token = create_refresh_token($user["username"]);
+                $_SESSION['username'] = $user['username']; //Guardamos el usario 
+                $_SESSION['tiempo'] = time(); //Guardamos el tiempo que se logea
+                // error_log($acces_token, 3, "debuglogin.txt");
+                echo json_encode(array($acces_token, $refresh_token));
+
                 exit;
             } else {
                 echo json_encode("error_passwd");
@@ -83,12 +83,12 @@ switch ($_GET['op']) {
         break;
 
     case 'data_user':
-        $token = decode_token($_POST['token']);
-        // echo json_encode($token);
+        $acces_token = decode_token($_POST['acces_token']);
+        // echo json_encode($acces_token);
         // exit;
         try {
             $daoLog = new DAOLogin();
-            $rdo = $daoLog->selectUserByName($token);
+            $rdo = $daoLog->selectUserByName($acces_token);
             echo json_encode($rdo);
             error_log("ok", 3, "debuglogin.txt");
             exit;
@@ -101,13 +101,63 @@ switch ($_GET['op']) {
         break;
 
     case 'logout':
-        // unset($_SESSION['username']);
-        // unset($_SESSION['tiempo']);
-        // session_destroy();
+        unset($_SESSION['username']);
+        unset($_SESSION['tiempo']);
+        session_destroy();
 
         echo json_encode('Done');
         break;
 
+    case 'actividad':
+        if (!isset($_SESSION["tiempo"])) {
+            echo json_encode("inactivo");
+            exit();
+        } else {
+            if ((time() - $_SESSION["tiempo"]) >= 1800) { //1800s=30min
+                echo json_encode("inactivo");
+                exit();
+            } else {
+                echo json_encode("activo");
+
+            }
+        }
+        break;
+
+    case 'controluser':
+        $acces_token = decode_token($_POST['acces_token']);
+        $refresh_token = decode_token($_POST['refresh_token']);
+
+        if ($acces_token['exp'] < time()) {
+            if ($refresh_token['exp'] < time()) {
+                echo json_encode("Wrong_User");
+                exit();
+            } else {
+                $old_acces_token = decode_token($_POST['acces_token']);
+                $new_acces_token = create_token($old_acces_token['username']);
+                echo json_encode($new_acces_token);
+                exit();
+            }
+        }
+
+        if (isset($_SESSION['username']) && ($_SESSION['username']) == $acces_token['username']) {
+            echo json_encode("Correct_User");
+            exit();
+        } else {
+            echo json_encode("Wrong_User");
+
+        }
+        break;
+
+    // case 'refresh_token':
+    //     $old_acces_token = decode_token($_POST['acces_token']);
+    //     $new_acces_token = create_token($old_acces_token['username']);
+    //     echo json_encode($new_acces_token);
+    //     break;
+
+    case 'refresh_cookie':
+        session_regenerate_id();
+        echo json_encode("Done");
+        break;
 
     default;
         include ("view/inc/error404.php");

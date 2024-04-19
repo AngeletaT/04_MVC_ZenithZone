@@ -24,3 +24,15 @@ function create_token($username)
     $token = $JWT->encode($header, $payload, $secret);
     return $token;
 }
+
+function create_refresh_token($username)
+{
+    $jwt = parse_ini_file('credentials.ini');
+    $header = $jwt['JWT_HEADER'];
+    $secret = $jwt['JWT_SECRET'];
+    $payload = '{"iat":"' . time() . '","exp":"' . time() + (800) . '","username":"' . $username . '"}';
+
+    $JWT = new JWT;
+    $token = $JWT->encode($header, $payload, $secret);
+    return $token;
+}

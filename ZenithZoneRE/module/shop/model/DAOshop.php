@@ -524,22 +524,35 @@ class DAOshop
         return $retrArray;
     }
 
-    function count_search($filters_search)
+    function scroll_details($limit, $code_prop)
     {
-        // FALTA LA CONSULTA
+        // $res = "ScrolldetailsDAO";
+        $sql = "SELECT *
+            FROM property p1
+            INNER JOIN property_type pt1 ON p1.code_prop = pt1.code_prop
+            INNER JOIN images i ON p1.code_prop = i.code_prop
+            WHERE i.img_prop LIKE '%.1.webp'
+            AND pt1.code_type = (SELECT pt2.code_type
+                        FROM property p2
+                        INNER JOIN property_type pt2 ON p2.code_prop = pt2.code_prop
+                        WHERE p2.code_prop = $code_prop)
+            AND p1.code_prop != $code_prop
+            LIMIT $limit;";
 
-        // $conexion = connect::con();
-        // $res = mysqli_query($conexion, $consulta);
-        // connect::close($conexion);
+        // error_log($sql, 3, "debug.txt");
 
-        // $retrArray = array();
-        // if ($res->num_rows > 0) {
-        //     while ($row = mysqli_fetch_assoc($res)) {
-        //         $retrArray[] = $row;
-        //     }
-        // }
-        // return $retrArray;
+        $conexion = connect::con();
+        $res = mysqli_query($conexion, $sql);
+
+        $retrArray = array();
+        if (mysqli_num_rows($res) > 0) {
+            while ($row = mysqli_fetch_assoc($res)) {
+                $retrArray[] = $row;
+            }
+        }
+        connect::close($conexion);
+        return $retrArray;
     }
-
 }
+
 ?>

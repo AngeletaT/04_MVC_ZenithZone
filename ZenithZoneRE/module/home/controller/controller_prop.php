@@ -1,9 +1,13 @@
 <?php
-include("c:/xampp/htdocs/angela/ZenithZoneRE/module/home/model/DAOprop.php");
+include ("c:/xampp/htdocs/angela/ZenithZoneRE/module/home/model/DAOprop.php");
+@session_start();
+if (isset($_SESSION["tiempo"])) {
+    $_SESSION["tiempo"] = time(); //Devuelve la fecha actual
+}
 
 switch ($_GET['op']) {
     case 'list';
-        include('module/home/view/home.html');
+        include ('module/home/view/home.html');
         break;
 
     case 'carrouselAct';
@@ -119,7 +123,7 @@ switch ($_GET['op']) {
         break;
 
     default;
-        include("view/inc/error404.php");
+        include ("view/inc/error404.php");
         break;
 }
 ?>

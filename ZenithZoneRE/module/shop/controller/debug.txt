@@ -1,6 +1,7 @@
 SELECT *
         FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
-        WHERE p.code_prop=pt.code_prop
+        WHERE p.code_prop = '2'
+        AND p.code_prop=pt.code_prop
         AND pt.code_type=t.code_type
         AND p.code_prop=pe.code_prop
         AND pe.code_extra=e.code_extra
@@ -8,8 +9,17 @@ SELECT *
         AND pc.code_cat=c.code_cat
         AND p.code_city=ct.code_city
         AND p.code_prop=pa.code_prop
-        AND pa.code_act=a.code_act AND c.code_cat = 2LIMIT 0, 2SELECT COUNT(*) contador
-        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '2'SELECT *
+        FROM property p1
+        INNER JOIN property_type pt1 ON p1.code_prop = pt1.code_prop
+        WHERE pt1.code_type = (SELECT pt2.code_type
+                                FROM property p2
+                                INNER JOIN property_type pt2 ON p2.code_prop = pt2.code_prop
+                                WHERE p2.code_prop = 2)
+        LIMIT 3;SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
         WHERE p.code_prop=pt.code_prop
         AND pt.code_type=t.code_type
         AND p.code_prop=pe.code_prop
@@ -17,18 +27,8 @@ SELECT *
         AND p.code_prop=pc.code_prop
         AND pc.code_cat=c.code_cat
         AND p.code_city=ct.code_city
-        AND p.code_prop=pa.code_prop
-        AND pa.code_act=a.code_act AND c.code_cat = 2SELECT COUNT(*) contador
-        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
-        WHERE p.code_prop=pt.code_prop
-        AND pt.code_type=t.code_type
-        AND p.code_prop=pe.code_prop
-        AND pe.code_extra=e.code_extra
-        AND p.code_prop=pc.code_prop
-        AND pc.code_cat=c.code_cat
-        AND p.code_city=ct.code_city
-        AND p.code_prop=pa.code_prop
-        AND pa.code_act=a.code_act AND c.code_cat = 2SELECT COUNT(*) contador
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
         FROM propertySELECT DISTINCT *
         FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
         WHERE p.code_prop=pt.code_prop
@@ -40,97 +40,6 @@ SELECT *
         AND p.code_city=ct.code_city
         ORDER BY p.code_prop ASC
         LIMIT 0, 2SELECT COUNT(*) contador
-        FROM propertySELECT COUNT(*) contador
-        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
-        WHERE p.code_prop=pt.code_prop
-        AND pt.code_type=t.code_type
-        AND p.code_prop=pe.code_prop
-        AND pe.code_extra=e.code_extra
-        AND p.code_prop=pc.code_prop
-        AND pc.code_cat=c.code_cat
-        AND p.code_city=ct.code_city
-        AND p.code_prop=pa.code_prop
-        AND pa.code_act=a.code_act AND ct.code_city = 3SELECT COUNT(*) contador
-        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
-        WHERE p.code_prop=pt.code_prop
-        AND pt.code_type=t.code_type
-        AND p.code_prop=pe.code_prop
-        AND pe.code_extra=e.code_extra
-        AND p.code_prop=pc.code_prop
-        AND pc.code_cat=c.code_cat
-        AND p.code_city=ct.code_city
-        AND p.code_prop=pa.code_prop
-        AND pa.code_act=a.code_act AND ct.code_city = 3SELECT *
-        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
-        WHERE p.code_prop=pt.code_prop
-        AND pt.code_type=t.code_type
-        AND p.code_prop=pe.code_prop
-        AND pe.code_extra=e.code_extra
-        AND p.code_prop=pc.code_prop
-        AND pc.code_cat=c.code_cat
-        AND p.code_city=ct.code_city
-        AND p.code_prop=pa.code_prop
-        AND pa.code_act=a.code_act AND ct.code_city = 3LIMIT 0, 2SELECT *
-        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
-        WHERE p.code_prop=pt.code_prop
-        AND pt.code_type=t.code_type
-        AND p.code_prop=pe.code_prop
-        AND pe.code_extra=e.code_extra
-        AND p.code_prop=pc.code_prop
-        AND pc.code_cat=c.code_cat
-        AND p.code_city=ct.code_city
-        AND p.code_prop=pa.code_prop
-        AND pa.code_act=a.code_act AND ct.code_city = 3 LIMIT 0, 2SELECT COUNT(*) contador
-        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
-        WHERE p.code_prop=pt.code_prop
-        AND pt.code_type=t.code_type
-        AND p.code_prop=pe.code_prop
-        AND pe.code_extra=e.code_extra
-        AND p.code_prop=pc.code_prop
-        AND pc.code_cat=c.code_cat
-        AND p.code_city=ct.code_city
-        AND p.code_prop=pa.code_prop
-        AND pa.code_act=a.code_act AND ct.code_city = 3SELECT COUNT(*) contador
-        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
-        WHERE p.code_prop=pt.code_prop
-        AND pt.code_type=t.code_type
-        AND p.code_prop=pe.code_prop
-        AND pe.code_extra=e.code_extra
-        AND p.code_prop=pc.code_prop
-        AND pc.code_cat=c.code_cat
-        AND p.code_city=ct.code_city
-        AND p.code_prop=pa.code_prop
-        AND pa.code_act=a.code_act AND ct.code_city = 3El resultado de la consulta es:SELECT *
-        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
-        WHERE p.code_prop=pt.code_prop
-        AND pt.code_type=t.code_type
-        AND p.code_prop=pe.code_prop
-        AND pe.code_extra=e.code_extra
-        AND p.code_prop=pc.code_prop
-        AND pc.code_cat=c.code_cat
-        AND p.code_city=ct.code_city
-        AND p.code_prop=pa.code_prop
-        AND pa.code_act=a.code_act AND ct.code_city = 3 LIMIT 0, 2SELECT COUNT(*) contador
-        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
-        WHERE p.code_prop=pt.code_prop
-        AND pt.code_type=t.code_type
-        AND p.code_prop=pe.code_prop
-        AND pe.code_extra=e.code_extra
-        AND p.code_prop=pc.code_prop
-        AND pc.code_cat=c.code_cat
-        AND p.code_city=ct.code_city
-        AND p.code_prop=pa.code_prop
-        AND pa.code_act=a.code_act AND ct.code_city = 3SELECT COUNT(*) contador
-        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
-        WHERE p.code_prop=pt.code_prop
-        AND pt.code_type=t.code_type
-        AND p.code_prop=pe.code_prop
-        AND pe.code_extra=e.code_extra
-        AND p.code_prop=pc.code_prop
-        AND pc.code_cat=c.code_cat
-        AND p.code_city=ct.code_city
-        AND p.code_prop=pa.code_prop
-        AND pa.code_act=a.code_act AND ct.code_city = 3El resultado de la consulta es:SELECT COUNT(*) contador
         FROM propertySELECT DISTINCT *
         FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
         WHERE p.code_prop=pt.code_prop
@@ -144,7 +53,8 @@ SELECT *
         LIMIT 0, 2SELECT COUNT(*) contador
         FROM propertySELECT *
         FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
-        WHERE p.code_prop=pt.code_prop
+        WHERE p.code_prop = '1'
+        AND p.code_prop=pt.code_prop
         AND pt.code_type=t.code_type
         AND p.code_prop=pe.code_prop
         AND pe.code_extra=e.code_extra
@@ -152,67 +62,16 @@ SELECT *
         AND pc.code_cat=c.code_cat
         AND p.code_city=ct.code_city
         AND p.code_prop=pa.code_prop
-        AND pa.code_act=a.code_act AND ct.code_city = 2 LIMIT 0, 2SELECT COUNT(*) contador
-        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
-        WHERE p.code_prop=pt.code_prop
-        AND pt.code_type=t.code_type
-        AND p.code_prop=pe.code_prop
-        AND pe.code_extra=e.code_extra
-        AND p.code_prop=pc.code_prop
-        AND pc.code_cat=c.code_cat
-        AND p.code_city=ct.code_city
-        AND p.code_prop=pa.code_prop
-        AND pa.code_act=a.code_act AND ct.code_city = 2SELECT COUNT(*) contador
-        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
-        WHERE p.code_prop=pt.code_prop
-        AND pt.code_type=t.code_type
-        AND p.code_prop=pe.code_prop
-        AND pe.code_extra=e.code_extra
-        AND p.code_prop=pc.code_prop
-        AND pc.code_cat=c.code_cat
-        AND p.code_city=ct.code_city
-        AND p.code_prop=pa.code_prop
-        AND pa.code_act=a.code_act AND ct.code_city = 2El resultado de la consulta es:SELECT *
-        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
-        WHERE p.code_prop=pt.code_prop
-        AND pt.code_type=t.code_type
-        AND p.code_prop=pe.code_prop
-        AND pe.code_extra=e.code_extra
-        AND p.code_prop=pc.code_prop
-        AND pc.code_cat=c.code_cat
-        AND p.code_city=ct.code_city
-        AND p.code_prop=pa.code_prop
-        AND pa.code_act=a.code_act AND ct.code_city = 2 LIMIT 0, 2SELECT COUNT(*) contador
-        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
-        WHERE p.code_prop=pt.code_prop
-        AND pt.code_type=t.code_type
-        AND p.code_prop=pe.code_prop
-        AND pe.code_extra=e.code_extra
-        AND p.code_prop=pc.code_prop
-        AND pc.code_cat=c.code_cat
-        AND p.code_city=ct.code_city
-        AND p.code_prop=pa.code_prop
-        AND pa.code_act=a.code_act AND ct.code_city = 2El resultado de la consulta es:SELECT COUNT(*) contador
-        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
-        WHERE p.code_prop=pt.code_prop
-        AND pt.code_type=t.code_type
-        AND p.code_prop=pe.code_prop
-        AND pe.code_extra=e.code_extra
-        AND p.code_prop=pc.code_prop
-        AND pc.code_cat=c.code_cat
-        AND p.code_city=ct.code_city
-        AND p.code_prop=pa.code_prop
-        AND pa.code_act=a.code_act AND ct.code_city = 2SELECT COUNT(*) contador
-        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
-        WHERE p.code_prop=pt.code_prop
-        AND pt.code_type=t.code_type
-        AND p.code_prop=pe.code_prop
-        AND pe.code_extra=e.code_extra
-        AND p.code_prop=pc.code_prop
-        AND pc.code_cat=c.code_cat
-        AND p.code_city=ct.code_city
-        AND p.code_prop=pa.code_prop
-        AND pa.code_act=a.code_act AND ct.code_city = 2SELECT DISTINCT *
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '1'SELECT *
+        FROM property p1
+        INNER JOIN property_type pt1 ON p1.code_prop = pt1.code_prop
+        WHERE pt1.code_type = (SELECT pt2.code_type
+                                FROM property p2
+                                INNER JOIN property_type pt2 ON p2.code_prop = pt2.code_prop
+                                WHERE p2.code_prop = 1)
+        LIMIT 3;SELECT DISTINCT *
         FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
         WHERE p.code_prop=pt.code_prop
         AND pt.code_type=t.code_type
@@ -222,7 +81,724 @@ SELECT *
         AND pc.code_cat=c.code_cat
         AND p.code_city=ct.code_city
         ORDER BY p.code_prop ASC
-        LIMIT 2, 2SELECT COUNT(*) contador
+        LIMIT 0, 2SELECT COUNT(*) contador
+        FROM propertySELECT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        WHERE p.code_prop = '1'
+        AND p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        AND p.code_prop=pa.code_prop
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '1'SELECT *
+        FROM property p1
+        INNER JOIN property_type pt1 ON p1.code_prop = pt1.code_prop
+        WHERE pt1.code_type = (SELECT pt2.code_type
+                                FROM property p2
+                                INNER JOIN property_type pt2 ON p2.code_prop = pt2.code_prop
+                                WHERE p2.code_prop = 1)
+        LIMIT 3;SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
+        FROM propertySELECT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        WHERE p.code_prop = '2'
+        AND p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        AND p.code_prop=pa.code_prop
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '2'SELECT *
+        FROM property p1
+        INNER JOIN property_type pt1 ON p1.code_prop = pt1.code_prop
+        INNER JOIN images i ON p1.code_prop = i.code_prop
+        WHERE i.img_prop LIKE '%.1.webp'
+        AND pt1.code_type = (SELECT pt2.code_type
+                                FROM property p2
+                                INNER JOIN property_type pt2 ON p2.code_prop = pt2.code_prop
+                                WHERE p2.code_prop = 2)
+        LIMIT 3;SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
+        FROM propertySELECT *
+        FROM property p1
+        INNER JOIN property_type pt1 ON p1.code_prop = pt1.code_prop
+        INNER JOIN images i ON p1.code_prop = i.code_prop
+        WHERE i.img_prop LIKE '%.1.webp'
+        AND pt1.code_type = (SELECT pt2.code_type
+                                FROM property p2
+                                INNER JOIN property_type pt2 ON p2.code_prop = pt2.code_prop
+                                WHERE p2.code_prop = 1)
+        LIMIT 3;SELECT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        WHERE p.code_prop = '1'
+        AND p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        AND p.code_prop=pa.code_prop
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '1'SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
+        FROM propertySELECT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        WHERE p.code_prop = '1'
+        AND p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        AND p.code_prop=pa.code_prop
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '1'SELECT *
+        FROM property p1
+        INNER JOIN property_type pt1 ON p1.code_prop = pt1.code_prop
+        INNER JOIN images i ON p1.code_prop = i.code_prop
+        WHERE i.img_prop LIKE '%.1.webp'
+        AND pt1.code_type = (SELECT pt2.code_type
+                                FROM property p2
+                                INNER JOIN property_type pt2 ON p2.code_prop = pt2.code_prop
+                                WHERE p2.code_prop = 2)
+        LIMIT 3;SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
+        FROM propertySELECT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        WHERE p.code_prop = '2'
+        AND p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        AND p.code_prop=pa.code_prop
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '2'SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
+        FROM propertySELECT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        WHERE p.code_prop = '2'
+        AND p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        AND p.code_prop=pa.code_prop
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '2'SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
+        FROM propertySELECT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        WHERE p.code_prop = '2'
+        AND p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        AND p.code_prop=pa.code_prop
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '2'SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
+        FROM propertySELECT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        WHERE p.code_prop = '2'
+        AND p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        AND p.code_prop=pa.code_prop
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '2'SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
+        FROM propertySELECT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        WHERE p.code_prop = '2'
+        AND p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        AND p.code_prop=pa.code_prop
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '2'SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
+        FROM propertySELECT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        WHERE p.code_prop = '1'
+        AND p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        AND p.code_prop=pa.code_prop
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '1'SELECT COUNT(*) contador
+        FROM propertySELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        WHERE p.code_prop = '2'
+        AND p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        AND p.code_prop=pa.code_prop
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '2'SELECT COUNT(*) contador
+        FROM propertySELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        WHERE p.code_prop = '1'
+        AND p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        AND p.code_prop=pa.code_prop
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '1'SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
+        FROM propertySELECT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        WHERE p.code_prop = '1'
+        AND p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        AND p.code_prop=pa.code_prop
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '1'SELECT COUNT(*) contador
+        FROM propertySELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        WHERE p.code_prop = '2'
+        AND p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        AND p.code_prop=pa.code_prop
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '2'SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
+        FROM propertySELECT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        WHERE p.code_prop = '2'
+        AND p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        AND p.code_prop=pa.code_prop
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '2'SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
+        FROM propertySELECT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        WHERE p.code_prop = '2'
+        AND p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        AND p.code_prop=pa.code_prop
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '2'SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
+        FROM propertySELECT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        WHERE p.code_prop = '2'
+        AND p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        AND p.code_prop=pa.code_prop
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '2'SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
+        FROM propertySELECT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        WHERE p.code_prop = '2'
+        AND p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        AND p.code_prop=pa.code_prop
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '2'SELECT COUNT(*) contador
+        FROM propertySELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        WHERE p.code_prop = '2'
+        AND p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        AND p.code_prop=pa.code_prop
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '2'SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
+        FROM propertySELECT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        WHERE p.code_prop = '2'
+        AND p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        AND p.code_prop=pa.code_prop
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '2'SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
+        FROM propertySELECT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        WHERE p.code_prop = '1'
+        AND p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        AND p.code_prop=pa.code_prop
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '1'SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
+        FROM propertySELECT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        WHERE p.code_prop = '1'
+        AND p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        AND p.code_prop=pa.code_prop
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '1'SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
+        FROM propertySELECT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        WHERE p.code_prop = '1'
+        AND p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        AND p.code_prop=pa.code_prop
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '1'SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
+        FROM propertySELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
+        FROM propertySELECT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        WHERE p.code_prop = '2'
+        AND p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        AND p.code_prop=pa.code_prop
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '2'SELECT COUNT(*) contador
+        FROM propertySELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        WHERE p.code_prop = '1'
+        AND p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        AND p.code_prop=pa.code_prop
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '1'SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
+        FROM propertySELECT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        WHERE p.code_prop = '1'
+        AND p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        AND p.code_prop=pa.code_prop
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '1'SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
+        FROM propertySELECT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        WHERE p.code_prop = '1'
+        AND p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        AND p.code_prop=pa.code_prop
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '1'SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
+        FROM propertySELECT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        WHERE p.code_prop = '2'
+        AND p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        AND p.code_prop=pa.code_prop
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '2'SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
         FROM propertySELECT DISTINCT *
         FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
         WHERE p.code_prop=pt.code_prop
@@ -234,9 +810,10 @@ SELECT *
         AND p.code_city=ct.code_city
         ORDER BY p.code_prop ASC
         LIMIT 2, 2SELECT COUNT(*) contador
-        FROM propertySELECT COUNT(*) contador
+        FROM propertySELECT *
         FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
-        WHERE p.code_prop=pt.code_prop
+        WHERE p.code_prop = '3'
+        AND p.code_prop=pt.code_prop
         AND pt.code_type=t.code_type
         AND p.code_prop=pe.code_prop
         AND pe.code_extra=e.code_extra
@@ -244,8 +821,11 @@ SELECT *
         AND pc.code_cat=c.code_cat
         AND p.code_city=ct.code_city
         AND p.code_prop=pa.code_prop
-        AND pa.code_act=a.code_act AND ct.code_city = 2SELECT COUNT(*) contador
-        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '3'SELECT COUNT(*) contador
+        FROM propertySELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
         WHERE p.code_prop=pt.code_prop
         AND pt.code_type=t.code_type
         AND p.code_prop=pe.code_prop
@@ -253,8 +833,8 @@ SELECT *
         AND p.code_prop=pc.code_prop
         AND pc.code_cat=c.code_cat
         AND p.code_city=ct.code_city
-        AND p.code_prop=pa.code_prop
-        AND pa.code_act=a.code_act AND c.code_cat = 2 AND ct.code_city = 2SELECT DISTINCT *
+        ORDER BY p.code_prop ASC
+        LIMIT 2, 2SELECT DISTINCT *
         FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
         WHERE p.code_prop=pt.code_prop
         AND pt.code_type=t.code_type
@@ -265,9 +845,10 @@ SELECT *
         AND p.code_city=ct.code_city
         ORDER BY p.code_prop ASC
         LIMIT 2, 2SELECT COUNT(*) contador
-        FROM propertySELECT DISTINCT *
+        FROM propertySELECT *
         FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
-        WHERE p.code_prop=pt.code_prop
+        WHERE p.code_prop = '3'
+        AND p.code_prop=pt.code_prop
         AND pt.code_type=t.code_type
         AND p.code_prop=pe.code_prop
         AND pe.code_extra=e.code_extra
@@ -275,7 +856,18 @@ SELECT *
         AND pc.code_cat=c.code_cat
         AND p.code_city=ct.code_city
         AND p.code_prop=pa.code_prop
-        AND pa.code_act=a.code_act AND ct.code_city = '3' ORDER BY p.code_prop ASC
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '3'SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
         LIMIT 2, 2SELECT COUNT(*) contador
         FROM propertySELECT DISTINCT *
         FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
@@ -289,7 +881,7 @@ SELECT *
         ORDER BY p.code_prop ASC
         LIMIT 0, 2SELECT COUNT(*) contador
         FROM propertySELECT DISTINCT *
-        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
         WHERE p.code_prop=pt.code_prop
         AND pt.code_type=t.code_type
         AND p.code_prop=pe.code_prop
@@ -297,8 +889,541 @@ SELECT *
         AND p.code_prop=pc.code_prop
         AND pc.code_cat=c.code_cat
         AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
+        FROM propertySELECT COUNT(*) contador
+        FROM propertySELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
+        FROM propertySELECT COUNT(*) contador
+        FROM propertySELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 8, 2SELECT COUNT(*) contador
+        FROM propertySELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 10, 2SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 8, 2SELECT COUNT(*) contador
+        FROM propertySELECT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        WHERE p.code_prop = '10'
+        AND p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
         AND p.code_prop=pa.code_prop
-        AND pa.code_act=a.code_act AND ct.code_city = '3' ORDER BY p.code_prop ASC
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '10'SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 8, 2SELECT COUNT(*) contador
+        FROM propertySELECT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        WHERE p.code_prop = '9'
+        AND p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        AND p.code_prop=pa.code_prop
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '9'SELECT COUNT(*) contador
+        FROM propertySELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 8, 2SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
+        FROM propertySELECT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        WHERE p.code_prop = '2'
+        AND p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        AND p.code_prop=pa.code_prop
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '2'SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
+        FROM propertySELECT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        WHERE p.code_prop = '1'
+        AND p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        AND p.code_prop=pa.code_prop
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '1'SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
+        FROM propertySELECT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        WHERE p.code_prop = '1'
+        AND p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        AND p.code_prop=pa.code_prop
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '1'SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
+        FROM propertySELECT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        WHERE p.code_prop = '1'
+        AND p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        AND p.code_prop=pa.code_prop
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '1'SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
+        FROM propertySELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
+        FROM propertySELECT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        WHERE p.code_prop = '1'
+        AND p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        AND p.code_prop=pa.code_prop
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '1'SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
+        FROM propertySELECT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        WHERE p.code_prop = '2'
+        AND p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        AND p.code_prop=pa.code_prop
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '2'SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
+        FROM propertySELECT COUNT(*) contador
+        FROM propertySELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        WHERE p.code_prop = '1'
+        AND p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        AND p.code_prop=pa.code_prop
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '1'SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
+        FROM propertySELECT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        WHERE p.code_prop = '1'
+        AND p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        AND p.code_prop=pa.code_prop
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '1'SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
+        FROM propertySELECT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        WHERE p.code_prop = '1'
+        AND p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        AND p.code_prop=pa.code_prop
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '1'SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
+        FROM propertySELECT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        WHERE p.code_prop = '1'
+        AND p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        AND p.code_prop=pa.code_prop
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '1'SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
+        FROM propertySELECT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        WHERE p.code_prop = '2'
+        AND p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        AND p.code_prop=pa.code_prop
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '2'SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
+        FROM propertySELECT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        WHERE p.code_prop = '1'
+        AND p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        AND p.code_prop=pa.code_prop
+        AND pa.code_act=a.code_actSELECT i.img_prop
+        FROM images i
+        WHERE i.code_prop = '1'SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
+        FROM propertySELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
+        FROM propertySELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
+        FROM propertySELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
+        FROM propertySELECT COUNT(*) contador
+        FROM propertySELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 2, 2SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 4, 2SELECT COUNT(*) contador
+        FROM propertySELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 6, 2SELECT COUNT(*) contador
+        FROM propertySELECT COUNT(*) contador
+        FROM propertySELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 4, 2SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 2, 2SELECT COUNT(*) contador
+        FROM propertySELECT COUNT(*) contador
+        FROM propertySELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
         LIMIT 0, 2SELECT COUNT(*) contador
         FROM propertySELECT DISTINCT *
         FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
@@ -311,6 +1436,39 @@ SELECT *
         AND p.code_city=ct.code_city
         ORDER BY p.code_prop ASC
         LIMIT 2, 2SELECT COUNT(*) contador
+        FROM propertySELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 4, 2SELECT COUNT(*) contador
+        FROM propertySELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 6, 2SELECT COUNT(*) contador
+        FROM propertySELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 8, 2SELECT COUNT(*) contador
         FROM propertySELECT COUNT(*) contador
         FROM propertySELECT DISTINCT *
         FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
@@ -322,78 +1480,7 @@ SELECT *
         AND pc.code_cat=c.code_cat
         AND p.code_city=ct.code_city
         ORDER BY p.code_prop ASC
-        LIMIT 2, 2SELECT COUNT(*) contador
-        FROM propertySELECT COUNT(*) contador
-        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
-        WHERE p.code_prop=pt.code_prop
-        AND pt.code_type=t.code_type
-        AND p.code_prop=pe.code_prop
-        AND pe.code_extra=e.code_extra
-        AND p.code_prop=pc.code_prop
-        AND pc.code_cat=c.code_cat
-        AND p.code_city=ct.code_city
-        AND p.code_prop=pa.code_prop
-        AND pa.code_act=a.code_act AND ct.code_city = '2' ORDER BY p.code_prop ASCSELECT COUNT(*) contador
-        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
-        WHERE p.code_prop=pt.code_prop
-        AND pt.code_type=t.code_type
-        AND p.code_prop=pe.code_prop
-        AND pe.code_extra=e.code_extra
-        AND p.code_prop=pc.code_prop
-        AND pc.code_cat=c.code_cat
-        AND p.code_city=ct.code_city
-        AND p.code_prop=pa.code_prop
-        AND pa.code_act=a.code_act AND ct.code_city = '2' ORDER BY p.code_prop ASCSELECT COUNT(*) contador
-        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
-        WHERE p.code_prop=pt.code_prop
-        AND pt.code_type=t.code_type
-        AND p.code_prop=pe.code_prop
-        AND pe.code_extra=e.code_extra
-        AND p.code_prop=pc.code_prop
-        AND pc.code_cat=c.code_cat
-        AND p.code_city=ct.code_city
-        AND p.code_prop=pa.code_prop
-        AND pa.code_act=a.code_act AND ct.code_city = '2' ORDER BY p.code_prop ASCSELECT COUNT(*) contador
-        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
-        WHERE p.code_prop=pt.code_prop
-        AND pt.code_type=t.code_type
-        AND p.code_prop=pe.code_prop
-        AND pe.code_extra=e.code_extra
-        AND p.code_prop=pc.code_prop
-        AND pc.code_cat=c.code_cat
-        AND p.code_city=ct.code_city
-        AND p.code_prop=pa.code_prop
-        AND pa.code_act=a.code_act AND a.code_act = '3' ORDER BY p.code_prop ASCSELECT COUNT(*) contador
-        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
-        WHERE p.code_prop=pt.code_prop
-        AND pt.code_type=t.code_type
-        AND p.code_prop=pe.code_prop
-        AND pe.code_extra=e.code_extra
-        AND p.code_prop=pc.code_prop
-        AND pc.code_cat=c.code_cat
-        AND p.code_city=ct.code_city
-        AND p.code_prop=pa.code_prop
-        AND pa.code_act=a.code_act AND a.code_act = '3' ORDER BY p.code_prop ASCSELECT COUNT(*) contador
-        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
-        WHERE p.code_prop=pt.code_prop
-        AND pt.code_type=t.code_type
-        AND p.code_prop=pe.code_prop
-        AND pe.code_extra=e.code_extra
-        AND p.code_prop=pc.code_prop
-        AND pc.code_cat=c.code_cat
-        AND p.code_city=ct.code_city
-        AND p.code_prop=pa.code_prop
-        AND pa.code_act=a.code_act AND a.code_act = '3' ORDER BY p.code_prop ASCSELECT COUNT(*) contador
-        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
-        WHERE p.code_prop=pt.code_prop
-        AND pt.code_type=t.code_type
-        AND p.code_prop=pe.code_prop
-        AND pe.code_extra=e.code_extra
-        AND p.code_prop=pc.code_prop
-        AND pc.code_cat=c.code_cat
-        AND p.code_city=ct.code_city
-        AND p.code_prop=pa.code_prop
-        AND pa.code_act=a.code_act AND a.code_act = '3' ORDER BY p.code_prop ASCSELECT DISTINCT *
+        LIMIT 10, 2SELECT DISTINCT *
         FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
         WHERE p.code_prop=pt.code_prop
         AND pt.code_type=t.code_type
@@ -403,18 +1490,8 @@ SELECT *
         AND pc.code_cat=c.code_cat
         AND p.code_city=ct.code_city
         ORDER BY p.code_prop ASC
-        LIMIT 2, 2SELECT COUNT(*) contador
-        FROM propertySELECT COUNT(*) contador
-        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
-        WHERE p.code_prop=pt.code_prop
-        AND pt.code_type=t.code_type
-        AND p.code_prop=pe.code_prop
-        AND pe.code_extra=e.code_extra
-        AND p.code_prop=pc.code_prop
-        AND pc.code_cat=c.code_cat
-        AND p.code_city=ct.code_city
-        AND p.code_prop=pa.code_prop
-        AND pa.code_act=a.code_act AND a.code_act = '3' ORDER BY p.code_prop ASCSELECT DISTINCT *
+        LIMIT 12, 2SELECT COUNT(*) contador
+        FROM propertySELECT DISTINCT *
         FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
         WHERE p.code_prop=pt.code_prop
         AND pt.code_type=t.code_type
@@ -424,7 +1501,40 @@ SELECT *
         AND pc.code_cat=c.code_cat
         AND p.code_city=ct.code_city
         ORDER BY p.code_prop ASC
-        LIMIT 2, 2SELECT COUNT(*) contador
+        LIMIT 14, 2SELECT COUNT(*) contador
+        FROM propertySELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 16, 2SELECT COUNT(*) contador
+        FROM propertySELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 18, 2SELECT COUNT(*) contador
+        FROM propertySELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 18, 2SELECT COUNT(*) contador
         FROM propertySELECT COUNT(*) contador
         FROM propertySELECT DISTINCT *
         FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
@@ -436,10 +1546,72 @@ SELECT *
         AND pc.code_cat=c.code_cat
         AND p.code_city=ct.code_city
         ORDER BY p.code_prop ASC
-        LIMIT 2, 2SELECT COUNT(*) contador
-        FROM propertySELECT COUNT(*) contador
-        FROM propertySELECT COUNT(*) contador
-        FROM propertySELECT COUNT(*) contador
+        LIMIT 16, 2SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 14, 2SELECT COUNT(*) contador
+        FROM propertySELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 12, 2SELECT COUNT(*) contador
+        FROM propertySELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 10, 2SELECT COUNT(*) contador
+        FROM propertySELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 8, 2SELECT COUNT(*) contador
+        FROM propertySELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 6, 2SELECT COUNT(*) contador
+        FROM propertySELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 4, 2SELECT COUNT(*) contador
         FROM propertySELECT DISTINCT *
         FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
         WHERE p.code_prop=pt.code_prop
@@ -451,7 +1623,28 @@ SELECT *
         AND p.code_city=ct.code_city
         ORDER BY p.code_prop ASC
         LIMIT 2, 2SELECT COUNT(*) contador
-        FROM propertySELECT COUNT(*) contador
+        FROM propertySELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
+        FROM propertySELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
         FROM propertySELECT COUNT(*) contador
         FROM propertySELECT DISTINCT *
         FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
@@ -463,13 +1656,8 @@ SELECT *
         AND pc.code_cat=c.code_cat
         AND p.code_city=ct.code_city
         ORDER BY p.code_prop ASC
-        LIMIT 2, 2SELECT COUNT(*) contador
-        FROM propertySELECT COUNT(*) contador
-        FROM propertySELECT COUNT(*) contador
-        FROM propertySELECT COUNT(*) contador
-        FROM propertySELECT COUNT(*) contador
-        FROM propertySELECT COUNT(*) contador
-        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct, activity a, property_activity pa
+        LIMIT 18, 2SELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
         WHERE p.code_prop=pt.code_prop
         AND pt.code_type=t.code_type
         AND p.code_prop=pe.code_prop
@@ -477,5 +1665,17 @@ SELECT *
         AND p.code_prop=pc.code_prop
         AND pc.code_cat=c.code_cat
         AND p.code_city=ct.code_city
-        AND p.code_prop=pa.code_prop
-        AND pa.code_act=a.code_act AND c.code_cat = 3
+        ORDER BY p.code_prop ASC
+        LIMIT 18, 2SELECT COUNT(*) contador
+        FROM propertySELECT DISTINCT *
+        FROM property p, property_type pt, type t, property_extras pe, extra e, property_category pc, category c, city ct
+        WHERE p.code_prop=pt.code_prop
+        AND pt.code_type=t.code_type
+        AND p.code_prop=pe.code_prop
+        AND pe.code_extra=e.code_extra
+        AND p.code_prop=pc.code_prop
+        AND pc.code_cat=c.code_cat
+        AND p.code_city=ct.code_city
+        ORDER BY p.code_prop ASC
+        LIMIT 0, 2SELECT COUNT(*) contador
+        FROM property

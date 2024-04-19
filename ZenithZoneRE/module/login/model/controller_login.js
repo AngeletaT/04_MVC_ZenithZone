@@ -10,15 +10,17 @@ function login() {
 
 		ajaxPromise("module/login/controller/controller_login.php?op=login", "POST", "JSON", data)
 			.then(function (result) {
-				// console.log("Dentro del then", result)
+				console.log("Dentro del then", result)
 				if (result == "error_username") {
 					document.getElementById("error_username_log").innerHTML =
 						"The user does not exist, make sure you have written it correctly"
 				} else if (result == "error_passwd") {
 					document.getElementById("error_passwd_log").innerHTML = "The password is incorrect"
 				} else {
-					localStorage.setItem("token", result)
-					console.log("token", result)
+					localStorage.setItem("acces_token", result[0])
+					localStorage.setItem("refresh_token", result[1])
+
+					console.log("acces_token", result)
 					toastr.success("Loged succesfully")
 					// Mostrar el perfil del usuario
 					document.getElementById("login-form").style.display = "none"
