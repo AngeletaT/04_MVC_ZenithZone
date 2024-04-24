@@ -917,6 +917,9 @@ td {
 	width: 300px;
 	height: 300px;
 }
+.propertytable .like {
+	text-align: right;
+}
 
 .shop .owl-nav {
 	position: absolute;
@@ -1009,7 +1012,7 @@ td {
 	height: 500px;
 }
 
-.detailstable table {
+.detailstable .tabledetails {
 	width: 100%;
 	height: 250px;
 	color: #68a4c4;
@@ -1036,6 +1039,7 @@ td {
 	width: 300px;
 	color: #121212;
 }
+
 .contact {
 	display: flex;
 	flex-direction: column;
@@ -1050,6 +1054,12 @@ td {
 .detail .row {
 	width: 100%;
 	height: 500px;
+}
+
+.detailstable .tablebuttons {
+	text-align: center;
+	width: 100%;
+	border-collapse: collapse;
 }
 
 .suggestions-container {
@@ -1079,52 +1089,6 @@ td {
 	margin-left: 40px;
 	margin-right: 40px;
 	width: 20rem;
-}
-
-/*----------------------------------------------------------------------------------------------------------------------------------------------
-# EXTRAS ANGELA
-----------------------------------------------------------------------------------------------------------------------------------------------*/
-
-.Button_principal {
-	background-color: #68a4c4;
-	color: #fff;
-	border-radius: 9px;
-	padding: 10px 20px;
-	border: 0;
-	font-size: 14px;
-	transition: 0.3s;
-}
-
-.Button_principal:hover {
-	background-color: #7aafcb;
-}
-
-.Button_segundario {
-	background-color: #1e4356;
-	color: #fff;
-	border-radius: 9px;
-	padding: 10px 20px;
-	border: 0;
-	font-size: 14px;
-	transition: 0.3s;
-}
-
-.Button_segundario:hover {
-	background-color: #255269;
-}
-
-.Button_red {
-	background-color: #ed3c0d;
-	color: #fff;
-	border-radius: 4px;
-	padding: 10px 20px;
-	border: 0;
-	font-size: 14px;
-	transition: 0.3s;
-}
-
-.Button_red:hover {
-	background-color: #ff4e2a;
 }
 
 /*-----------------------------------------------------------------------------------------------------------------------------------------------
@@ -1487,4 +1451,102 @@ td {
 
 #footer .credits a {
 	color: #a2cce3;
+}
+
+/*----------------------------------------------------------------------------------------------------------------------------------------------
+# EXTRAS ANGELA
+----------------------------------------------------------------------------------------------------------------------------------------------*/
+
+.Button_principal {
+	background-color: #68a4c4;
+	color: #fff;
+	border-radius: 9px;
+	padding: 10px 20px;
+	border: 0;
+	font-size: 14px;
+	transition: 0.3s;
+}
+
+.Button_principal:hover {
+	background-color: #7aafcb;
+}
+
+.Button_segundario {
+	background-color: #1e4356;
+	color: #fff;
+	border-radius: 9px;
+	padding: 10px 20px;
+	border: 0;
+	font-size: 14px;
+	transition: 0.3s;
+}
+
+.Button_segundario:hover {
+	background-color: #255269;
+}
+
+.Button_red {
+	background-color: #ed3c0d;
+	color: #fff;
+	border-radius: 4px;
+	padding: 10px 20px;
+	border: 0;
+	font-size: 14px;
+	transition: 0.3s;
+}
+
+.Button_red:hover {
+	background-color: #ff4e2a;
+}
+
+/* LIKE BUTTON */
+.like-content {
+	text-align: right;
+}
+.like-content span {
+	color: #9d9da4;
+	font-family: monospace;
+}
+.like-content .Button_segundario {
+	display: block;
+	/* margin: 40px auto 0px; */
+	text-align: center;
+	background: #ef96ab;
+	border-radius: 9px;
+	/* box-shadow: 0 10px 20px -8px rgb(240, 75, 113); */
+	/* padding: 10px 17px; */
+	font-size: 14px;
+	cursor: pointer;
+	border: none;
+	outline: none;
+	color: #ffffff;
+	text-decoration: none;
+	-webkit-transition: 0.3s ease;
+	transition: 0.3s ease;
+}
+
+.like-content .Button_segundario.active {
+	transform: translateY(3px);
+	background: #ed2553;
+}
+
+.like-content .Button_segundario:hover {
+	transform: translateY(-3px);
+}
+.like-content .Button_segundario .fa {
+	margin-right: 5px;
+}
+.animate-like {
+	animation-name: likeAnimation;
+	animation-iteration-count: 1;
+	animation-fill-mode: forwards;
+	animation-duration: 0.65s;
+}
+@keyframes likeAnimation {
+	0% {
+		transform: scale(30);
+	}
+	100% {
+		transform: scale(1);
+	}
 }

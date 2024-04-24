@@ -1,9 +1,10 @@
 function loadprops() {
 	// ajaxForSearch("module/shop/controller/controller_shop.php?op=all_prop");
-	console.log("loadprops")
+	// console.log("loadprops")
 	var filters_home = JSON.parse(localStorage.getItem("filters_home")) || false
 	var filters_details = JSON.parse(localStorage.getItem("filters_details")) || false
 	var filters_shop = JSON.parse(localStorage.getItem("filters_shop")) || false
+	var redirect_like = localStorage.getItem("redirect_like") || false
 	// var filters_search = JSON.parse(localStorage.getItem("filters_search")) || false (funciona con filters_Shop)
 
 	if (filters_home !== false) {
@@ -17,18 +18,24 @@ function loadprops() {
 		// console.log("filtershop")
 		highlight_filters()
 		// pagination()
+	} else if (redirect_like !== false) {
+		console.log("LOADPROPS redirect_like")
+		loadDetails(redirect_like)
+		localStorage.removeItem("redirect_like")
 	} else {
 		ajaxForSearch("module/shop/controller/controller_shop.php?op=all_prop")
-		console.log("allprop")
+		// console.log("allprop")
 	}
 }
+var userLiked = "no-like"
 
 // #region AJAX
 // FUNCION QUE LLAMA A SALTO HOME
 function ajaxForSearch(url, items_page = 2) {
 	var filters_home = JSON.parse(localStorage.getItem("filters_home"))
+	var acces_token = localStorage.getItem("acces_token")
 	localStorage.removeItem("filters_home")
-	console.log("filters home:", filters_home)
+	// console.log("filters home:", filters_home)
 	// console.log(url)
 
 	var page = 1
@@ -51,86 +58,179 @@ function ajaxForSearch(url, items_page = 2) {
 					.appendTo("#content_shop_prop")
 					.html("<h3>¡No se encuentran resultados con los filtros aplicados!</h3>")
 			} else {
-				for (row in data) {
-					var carousel = ""
-					data[row].images.forEach(function (image) {
-						carousel += `<div class="item imagen"><img src="${image}" alt="property" /></div>`
-					})
-					$("<div></div>").attr({"id": data[row].code_prop, "class": "propertytable"}).appendTo("#content_shop_prop")
-						.html(`
-                        <table>
-                            <tr>
-								<td rowspan="7" class="imagen">
-                				    <div class="owl-container imagen shop">
-                				        <div class="owl-list owl-carousel owl-theme imagen shop">
-                				            ${carousel}
-                				        </div>
-                				    </div>
-                				</td>
-                                <td colspan="8"><a class="titlelist" id="${data[row].code_prop}">
-									<h2>${data[row].price
-										.toString()
-										.replace(/\B(?=(\d{3})+(?!\d))/g, ".")}&nbsp;<i class="fa-solid fa-euro-sign"></i></h2></a>
-								</td>
-                            </tr>
-                            <tr>
-								<td colspan="8"><h5>${data[row].name_prop}</h5</td>
-							</tr>
-							<tr>
-								<td colspan="8">${data[row].description}</td>
-							</tr>
-                            <tr>
-                                <td class="icon"><i class="fa-solid fa-bed fa-xl"></i></td>
-                                <td class="text">${data[row].rooms}</td>
-                                <td class="icon"><i class="fa-solid fa-bath fa-xl"></i></td>
-                                <td class="text">${data[row].baths}</td>
-                                <td class="icon"><i class="fa-solid fa-key fa-xl"></i></td>
-                                <td class="text">${data[row].name_cat}</td>
-                            </tr>
-                            <tr>
-                                <td class="icon"><i class="fa-solid fa-expand fa-xl"></i></td>
-                                <td class="text">${data[row].m2}</td>
-                                <td class="icon"><i class="fa-solid fa-location-dot fa-xl"></i></td>
-                                <td class="text">${data[row].name_city}</td>
-                                <td class="icon"><i class="fa-solid fa-plus fa-xl"></i></td>
-                                <td class="text">${data[row].name_extra}</td>
-                            </tr>
-							<tr>
-                                <td colspan='8'>
-                                    <button id='${
-																			data[row].code_prop
-																		}' class='more_info_list Button_principal'>More Info</button>
-                                </td>
-							</tr>
-                        </table>
-					`)
+				for (var row in data) {
+					;(function (row) {
+						setTimeout(function () {
+							console.log("Row:", row)
+							// Crear una función para capturar el valor de row
+							if (acces_token) {
+								console.log("Existe acces_token")
+								var carousel = ""
+								data[row].images.forEach(function (image) {
+									carousel += `<div class="item imagen"><img src="${image}" alt="property" /></div>`
+								})
+								checkLike(data[row].code_prop, acces_token)
+									.then(function (userLiked) {
+										console.log("userLiked", userLiked)
+										$("<div></div>")
+											.attr({"id": data[row].code_prop, "class": "propertytable"})
+											.appendTo("#content_shop_prop").html(`
+                	    					    <table>
+                	    					        <tr>
+														<td rowspan="7" class="imagen">
+                										    <div class="owl-container imagen shop">
+                										        <div class="owl-list owl-carousel owl-theme imagen shop">
+                										            ${carousel}
+                										        </div>
+                										    </div>
+                										</td>
+                	    					            <td colspan="8"><a class="titlelist" id="${data[row].code_prop}">
+															<h2>${data[row].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}&nbsp;
+															<i class="fa-solid fa-euro-sign"></i></h2></a>
+														</td>
+                	    					        </tr>
+                	    					        <tr>
+														<td colspan="8"><h5>${data[row].name_prop}</h5</td>
+													</tr>
+													<tr>
+														<td colspan="8">${data[row].description}</td>
+													</tr>
+                	    					        <tr>
+                	    					            <td class="icon"><i class="fa-solid fa-bed fa-xl"></i></td>
+                	    					            <td class="text">${data[row].rooms}</td>
+                	    					            <td class="icon"><i class="fa-solid fa-bath fa-xl"></i></td>
+                	    					            <td class="text">${data[row].baths}</td>
+                	    					            <td class="icon"><i class="fa-solid fa-key fa-xl"></i></td>
+                	    					            <td class="text">${data[row].name_cat}</td>
+                	    					        </tr>
+                	    					        <tr>
+                	    					            <td class="icon"><i class="fa-solid fa-expand fa-xl"></i></td>
+                	    					            <td class="text">${data[row].m2}</td>
+                	    					            <td class="icon"><i class="fa-solid fa-location-dot fa-xl"></i></td>
+                	    					            <td class="text">${data[row].name_city}</td>
+                	    					            <td class="icon"><i class="fa-solid fa-plus fa-xl"></i></td>
+                	    					            <td class="text">${data[row].name_extra}</td>
+                	    					        </tr>
+													<tr>
+                	    					            <td colspan='4'>
+                	    					                <button id='${data[row].code_prop}' 
+															class='more_info_list Button_principal'>More Info</button>
+                	    					            </td>
+														<td colspan='4' class="like-content">
+															<button id='${data[row].code_prop}'class="${userLiked}">
+															<i class="fa fa-heart" aria-hidden="true"></i>${data[row].likes}</button>
+														</td>
+													</tr>
+                	    					    </table>
+											`)
+										$(".owl-list").owlCarousel({
+											loop: true,
+											autoplay: true,
+											margin: 10,
+											nav: true,
+											dots: false,
+											responsive: {
+												0: {
+													items: 1,
+												},
+												600: {
+													items: 1,
+												},
+												1000: {
+													items: 1,
+												},
+											},
+										})
+									})
+									.catch(function (error) {
+										console.error("Error en checkLike:", error)
+									})
+							} else {
+								console.log("No existe acces_token")
+								var carousel = ""
+								data[row].images.forEach(function (image) {
+									carousel += `<div class="item imagen"><img src="${image}" alt="property" /></div>`
+								})
+								$("<div></div>")
+									.attr({"id": data[row].code_prop, "class": "propertytable"})
+									.appendTo("#content_shop_prop").html(`
+                	        			<table>
+                	        			    <tr>
+												<td rowspan="7" class="imagen">
+                								    <div class="owl-container imagen shop">
+                								        <div class="owl-list owl-carousel owl-theme imagen shop">
+                								            ${carousel}
+                								        </div>
+                								    </div>
+                								</td>
+                	        			        <td colspan="8"><a class="titlelist" id="${data[row].code_prop}">
+													<h2>${data[row].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}&nbsp;
+													<i class="fa-solid fa-euro-sign"></i></h2></a>
+												</td>
+                	        			    </tr>
+                	        			    <tr>
+												<td colspan="8"><h5>${data[row].name_prop}</h5</td>
+											</tr>
+											<tr>
+												<td colspan="8">${data[row].description}</td>
+											</tr>
+                	        			    <tr>
+                	        			        <td class="icon"><i class="fa-solid fa-bed fa-xl"></i></td>
+                	        			        <td class="text">${data[row].rooms}</td>
+                	        			        <td class="icon"><i class="fa-solid fa-bath fa-xl"></i></td>
+                	        			        <td class="text">${data[row].baths}</td>
+                	        			        <td class="icon"><i class="fa-solid fa-key fa-xl"></i></td>
+                	        			        <td class="text">${data[row].name_cat}</td>
+                	        			    </tr>
+                	        			    <tr>
+                	        			        <td class="icon"><i class="fa-solid fa-expand fa-xl"></i></td>
+                	        			        <td class="text">${data[row].m2}</td>
+                	        			        <td class="icon"><i class="fa-solid fa-location-dot fa-xl"></i></td>
+                	        			        <td class="text">${data[row].name_city}</td>
+                	        			        <td class="icon"><i class="fa-solid fa-plus fa-xl"></i></td>
+                	        			        <td class="text">${data[row].name_extra}</td>
+                	        			    </tr>
+											<tr>
+                	        			        <td colspan='4'>
+                	        			            <button id='${data[row].code_prop}' 
+													class='more_info_list Button_principal'>More Info</button>
+                	        			        </td>
+												<td colspan='4' class="like-content">
+													<button id='${data[row].code_prop}'class="like-review Button_segundario">
+													<i class="fa fa-heart" aria-hidden="true"></i>${data[row].likes}</button>
+												</td>
+											</tr>
+                	        			</table>
+									`)
+								$(".owl-list").owlCarousel({
+									loop: true,
+									autoplay: true,
+									margin: 10,
+									nav: true,
+									dots: false,
+									responsive: {
+										0: {
+											items: 1,
+										},
+										600: {
+											items: 1,
+										},
+										1000: {
+											items: 1,
+										},
+									},
+								})
+							}
+						}, 1000) // 1 segundo de espera
+					})(row) // Pasar el valor actual de row a la función anónima
 				}
-
-				$(".owl-list").owlCarousel({
-					loop: true,
-					autoplay: true,
-					margin: 10,
-					nav: true,
-					dots: false,
-					responsive: {
-						0: {
-							items: 1,
-						},
-						600: {
-							items: 1,
-						},
-						1000: {
-							items: 1,
-						},
-					},
-				})
-
-				if (localStorage.getItem("id")) {
-					document.getElementById(move_id).scrollIntoView()
-				}
-
-				load_map_shop(data)
 			}
+
+			if (localStorage.getItem("id")) {
+				document.getElementById(move_id).scrollIntoView()
+			}
+
+			load_map_shop(data)
 		})
 		.catch(function (e) {
 			console.error("Catch error: ", e)
@@ -141,6 +241,8 @@ function ajaxForSearch(url, items_page = 2) {
 // FUNCION QUE LLAMA A CARGAR SHOP
 function ajaxForSearch_Shop(url, items_page = 2) {
 	var filters_shop = JSON.parse(localStorage.getItem("filters_shop"))
+	var acces_token = localStorage.getItem("acces_token")
+
 	// console.log(filters_shop)
 
 	console.log("offset es:", offset)
@@ -167,77 +269,172 @@ function ajaxForSearch_Shop(url, items_page = 2) {
 					.html("<h3>¡No se encuentran resultados con los filtros aplicados!</h3>")
 			} else {
 				// console.log(data)
-				for (row in data) {
-					var carousel = ""
-					data[row].images.forEach(function (image) {
-						carousel += `<div class="item imagen"><img src="${image}" alt="property" /></div>`
-					})
-					$("<div></div>").attr({"id": data[row].code_prop, "class": "propertytable"}).appendTo("#content_shop_prop")
-						.html(`
-                        <table>
-                            <tr>
-								<td rowspan="7" class="imagen">
-                				    <div class="owl-container imagen shop">
-                				        <div class="owl-list owl-carousel owl-theme imagen shop">
-                				            ${carousel}
-                				        </div>
-                				    </div>
-                				</td>
-                                <td colspan="8"><a class="titlelist" id="${data[row].code_prop}">
-									<h2>${data[row].price
-										.toString()
-										.replace(/\B(?=(\d{3})+(?!\d))/g, ".")}&nbsp;<i class="fa-solid fa-euro-sign"></i></h2></a>
-								</td>
-                            </tr>
-                            <tr>
-								<td colspan="8"><h5>${data[row].name_prop}<h5></td>
-							</tr>
-							<tr>
-								<td colspan="8">${data[row].description}</td>
-							</tr>
-                            <tr>
-								<td class="icon"><i class="fa-solid fa-bed fa-xl"></i></td>
-								<td class="text">${data[row].rooms}</td>
-								<td class="icon"><i class="fa-solid fa-bath fa-xl"></i></td>
-								<td class="text">${data[row].baths}</td>
-								<td class="icon"><i class="fa-solid fa-key fa-xl"></i></td>
-								<td class="text">${data[row].name_cat}</td>
-                            </tr>
-                            <tr>
-								<td class="icon"><i class="fa-solid fa-expand fa-xl"></i></td>
-								<td class="text">${data[row].m2}</td>
-								<td class="icon"><i class="fa-solid fa-location-dot fa-xl"></i></td>
-								<td class="text">${data[row].name_city}</td>
-								<td class="icon"><i class="fa-solid fa-plus fa-xl"></i></td>
-								<td class="text">${data[row].name_extra}</td>
-                            </tr>
-							<tr>
-								<td colspan='8'>
-									<button id='${data[row].code_prop}' class='more_info_list Button_principal'>More Info</button>
-								</td>
-							</tr>
-						</table>
-					`)
+				for (var row in data) {
+					;(function (row) {
+						setTimeout(function () {
+							console.log("Row:", row)
+							// Crear una función para capturar el valor de row
+							if (acces_token) {
+								console.log("Existe acces_token")
+								var carousel = ""
+								data[row].images.forEach(function (image) {
+									carousel += `<div class="item imagen"><img src="${image}" alt="property" /></div>`
+								})
+								checkLike(data[row].code_prop, acces_token)
+									.then(function (userLiked) {
+										console.log("userLiked", userLiked)
+										$("<div></div>")
+											.attr({"id": data[row].code_prop, "class": "propertytable"})
+											.appendTo("#content_shop_prop").html(`
+                	    			    <table>
+                	    			        <tr>
+												<td rowspan="7" class="imagen">
+                								    <div class="owl-container imagen shop">
+                								        <div class="owl-list owl-carousel owl-theme imagen shop">
+                								            ${carousel}
+                								        </div>
+                								    </div>
+                								</td>
+                	    			            <td colspan="8"><a class="titlelist" id="${data[row].code_prop}">
+													<h2>${data[row].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}&nbsp;
+													<i class="fa-solid fa-euro-sign"></i></h2></a>
+												</td>
+                	    			        </tr>
+                	    			        <tr>
+												<td colspan="8"><h5>${data[row].name_prop}</h5</td>
+											</tr>
+											<tr>
+												<td colspan="8">${data[row].description}</td>
+											</tr>
+                	    			        <tr>
+                	    			            <td class="icon"><i class="fa-solid fa-bed fa-xl"></i></td>
+                	    			            <td class="text">${data[row].rooms}</td>
+                	    			            <td class="icon"><i class="fa-solid fa-bath fa-xl"></i></td>
+                	    			            <td class="text">${data[row].baths}</td>
+                	    			            <td class="icon"><i class="fa-solid fa-key fa-xl"></i></td>
+                	    			            <td class="text">${data[row].name_cat}</td>
+                	    			        </tr>
+                	    			        <tr>
+                	    			            <td class="icon"><i class="fa-solid fa-expand fa-xl"></i></td>
+                	    			            <td class="text">${data[row].m2}</td>
+                	    			            <td class="icon"><i class="fa-solid fa-location-dot fa-xl"></i></td>
+                	    			            <td class="text">${data[row].name_city}</td>
+                	    			            <td class="icon"><i class="fa-solid fa-plus fa-xl"></i></td>
+                	    			            <td class="text">${data[row].name_extra}</td>
+                	    			        </tr>
+											<tr>
+                	    			            <td colspan='4'>
+                	    			                <button id='${data[row].code_prop}' 
+													class='more_info_list Button_principal'>More Info</button>
+                	    			            </td>
+												<td colspan='4' class="like-content">
+													<button id='${data[row].code_prop}'class="${userLiked}">
+													<i class="fa fa-heart" aria-hidden="true"></i>${data[row].likes}</button>
+												</td>
+											</tr>
+                	    			    </table>
+									`)
+										$(".owl-list").owlCarousel({
+											loop: true,
+											autoplay: true,
+											margin: 10,
+											nav: true,
+											dots: false,
+											responsive: {
+												0: {
+													items: 1,
+												},
+												600: {
+													items: 1,
+												},
+												1000: {
+													items: 1,
+												},
+											},
+										})
+									})
+									.catch(function (error) {
+										console.error("Error en checkLike:", error)
+									})
+							} else {
+								console.log("No existe acces_token")
+								var carousel = ""
+								data[row].images.forEach(function (image) {
+									carousel += `<div class="item imagen"><img src="${image}" alt="property" /></div>`
+								})
+								$("<div></div>")
+									.attr({"id": data[row].code_prop, "class": "propertytable"})
+									.appendTo("#content_shop_prop").html(`
+                	        			<table>
+                	        			    <tr>
+												<td rowspan="7" class="imagen">
+                								    <div class="owl-container imagen shop">
+                								        <div class="owl-list owl-carousel owl-theme imagen shop">
+                								            ${carousel}
+                								        </div>
+                								    </div>
+                								</td>
+                	        			        <td colspan="8"><a class="titlelist" id="${data[row].code_prop}">
+													<h2>${data[row].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")}&nbsp;
+													<i class="fa-solid fa-euro-sign"></i></h2></a>
+												</td>
+                	        			    </tr>
+                	        			    <tr>
+												<td colspan="8"><h5>${data[row].name_prop}</h5</td>
+											</tr>
+											<tr>
+												<td colspan="8">${data[row].description}</td>
+											</tr>
+                	        			    <tr>
+                	        			        <td class="icon"><i class="fa-solid fa-bed fa-xl"></i></td>
+                	        			        <td class="text">${data[row].rooms}</td>
+                	        			        <td class="icon"><i class="fa-solid fa-bath fa-xl"></i></td>
+                	        			        <td class="text">${data[row].baths}</td>
+                	        			        <td class="icon"><i class="fa-solid fa-key fa-xl"></i></td>
+                	        			        <td class="text">${data[row].name_cat}</td>
+                	        			    </tr>
+                	        			    <tr>
+                	        			        <td class="icon"><i class="fa-solid fa-expand fa-xl"></i></td>
+                	        			        <td class="text">${data[row].m2}</td>
+                	        			        <td class="icon"><i class="fa-solid fa-location-dot fa-xl"></i></td>
+                	        			        <td class="text">${data[row].name_city}</td>
+                	        			        <td class="icon"><i class="fa-solid fa-plus fa-xl"></i></td>
+                	        			        <td class="text">${data[row].name_extra}</td>
+                	        			    </tr>
+											<tr>
+                	        			        <td colspan='4'>
+                	        			            <button id='${data[row].code_prop}' 
+													class='more_info_list Button_principal'>More Info</button>
+                	        			        </td>
+												<td colspan='4' class="like-content">
+													<button id='${data[row].code_prop}'class="like-review Button_segundario">
+													<i class="fa fa-heart" aria-hidden="true"></i>${data[row].likes}</button>
+												</td>
+											</tr>
+                	        			</table>
+									`)
+								$(".owl-list").owlCarousel({
+									loop: true,
+									autoplay: true,
+									margin: 10,
+									nav: true,
+									dots: false,
+									responsive: {
+										0: {
+											items: 1,
+										},
+										600: {
+											items: 1,
+										},
+										1000: {
+											items: 1,
+										},
+									},
+								})
+							}
+						}, 1000) // 1 segundo de espera
+					})(row) // Pasar el valor actual de row a la función anónima
 				}
-
-				$(".owl-list").owlCarousel({
-					loop: true,
-					autoplay: true,
-					margin: 10,
-					nav: true,
-					dots: false,
-					responsive: {
-						0: {
-							items: 1,
-						},
-						600: {
-							items: 1,
-						},
-						1000: {
-							items: 1,
-						},
-					},
-				})
 
 				if (localStorage.getItem("id")) {
 					document.getElementById(move_id).scrollIntoView()
@@ -264,6 +461,7 @@ function clicks() {
 }
 
 function loadDetails(code_prop) {
+	var acces_token = localStorage.getItem("acces_token")
 	localStorage.removeItem("filters_details")
 
 	ajaxPromise("module/shop/controller/controller_shop.php?op=details_prop&id=" + code_prop, "GET", "JSON")
@@ -277,18 +475,20 @@ function loadDetails(code_prop) {
 			$(".orderbyshop").empty()
 			$("#mapdet").show()
 
-			for (row in data[1][0]) {
-				$("<div></div>").attr({"id": data[1][0].code_img, class: "item date_img_dentro"}).appendTo(".date_img").html(`
-                    <div class='detailsimg'>
-                        <img src='${data[1][0][row].img_prop}'></img>
-                    </div>`)
-			}
+			if (acces_token) {
+				console.log(data)
+				checkLike(data[0].code_prop, acces_token).then(function (userLiked) {
+					// console.log("userLiked", userLiked)
+					for (row in data[1][0]) {
+						$("<div></div>").attr({class: "item date_img_dentro"}).appendTo(".date_img").html(`
+							<div class='detailsimg'>
+								<img src='${data[1][0][row].img_prop}'></img>
+							</div>`)
+					}
 
-			$("<div></div>")
-				.attr({"id": data[0].code_prop, class: "date_prop_dentro"})
-				.appendTo(".date_prop")
-				.html(
-					`<div class="list_product_details">
+					$("<div></div>")
+						.attr({"id": data[0].code_prop, class: "date_prop_dentro"})
+						.appendTo(".date_prop").html(`<div class="list_product_details">
 							<div class="product-info_details">
 							<div class="product-content_details detailstable">
 								<br />
@@ -296,7 +496,7 @@ function loadDetails(code_prop) {
 									<b>${data[0].name_prop}</b>
 								</h1>
 								<hr class="hr-shop" />
-								<table id="table-shop">
+								<table id="table-shop" class="tabledetails">
 									<tr>
 										<td class="icon">
 											<i id="col-ico" class="fa-solid fa-bed fa-2xl"></i>
@@ -342,33 +542,146 @@ function loadDetails(code_prop) {
 									</span>
 									<br />
 									<br />
-									<a class="Button_principal contact" href="#">
-										Contacta
-									</a>
+									<table class="tablebuttons">
+										<tr>
+                                			<td>
+                                			    <button id='${data[0].code_prop}' 
+												class='Button_principal contact'>Contacta</button>
+                                			</td>
+											<td class="like-content">
+												<button id='${data[0].code_prop}'class="${userLiked}">												
+												<i class="fa fa-heart" aria-hidden="true"></i> ${data[0].likes}</button>
+											</td>
+										</tr>
+                        			</table>
+								</div>
+							</div>
+						</div>
+					</div>
+					`)
+					$(".owl-details").owlCarousel({
+						loop: true,
+						autoplay: true,
+						margin: 10,
+						nav: false,
+						dots: true,
+						responsive: {
+							0: {
+								items: 1,
+							},
+							600: {
+								items: 2,
+							},
+							1000: {
+								items: 2,
+							},
+						},
+					})
+					load_map_details(data[0])
+				})
+			} else {
+				for (row in data[1][0]) {
+					$("<div></div>").attr({class: "item date_img_dentro"}).appendTo(".date_img").html(`
+                    <div class='detailsimg'>
+                        <img src='${data[1][0][row].img_prop}'></img>
+                    </div>`)
+				}
+
+				$("<div></div>")
+					.attr({"id": data[0].code_prop, class: "date_prop_dentro"})
+					.appendTo(".date_prop")
+					.html(
+						`<div class="list_product_details">
+							<div class="product-info_details">
+							<div class="product-content_details detailstable">
+								<br />
+								<h1>
+									<b>${data[0].name_prop}</b>
+								</h1>
+								<hr class="hr-shop" />
+								<table id="table-shop" class="tabledetails">
+									<tr>
+										<td class="icon">
+											<i id="col-ico" class="fa-solid fa-bed fa-2xl"></i>
+										</td>
+										<td class="text">${data[0].rooms}</td>
+										<td class="icon">
+											<i id="col-ico" class="fa-solid fa-bath fa-2xl"></i>
+										</td>
+										<td class="text">${data[0].baths}</td>
+									</tr>
+									<tr>
+										<td class="icon">
+											<i id="col-ico" class="fa-solid fa-expand fa-2xl"></i>
+										</td>
+										<td class="text">${data[0].m2}</td>
+										<td class="icon">
+											<i id="col-ico" class="fa-solid fa-key fa-2xl"></i>
+										</td>
+										<td class="text">${data[0].name_cat}</td>
+									</tr>
+									<tr>
+										<td class="icon">
+											<i id="col-ico" class="fa-solid fa-house fa-2xl"></i>
+										</td>
+										<td class="text">${data[0].name_type}</td>
+										<td class="icon">
+											<i id="col-ico" class="fa-solid fa-plus fa-2xl"></i>
+										</td>
+										<td class="text">${data[0].name_extra}</td>
+									</tr>
+								</table>
+								<br />
+								<h3>
+									<b>More Information:</b>
+								</h3>
+								<p>${data[0].description}</p>
+								<br />
+								<hr class="hr-shop" />
+								<div class="buttons_details">
+									<span class="button" id="price_details" style="font-size: 24px;">
+										${data[0].price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ".")} &nbsp;
+										<i class="fa-solid fa-euro-sign"></i>
+									</span>
+									<br />
+									<br />
+									<table class="tablebuttons">
+										<tr>
+                                			<td>
+                                			    <button id='${data[0].code_prop}' 
+												class='Button_principal contact'>Contacta</button>
+                                			</td>
+											<td class="like-content">
+												<button id='${data[0].code_prop}'class="like-review Button_segundario">
+												<i class="fa fa-heart" aria-hidden="true"></i> ${data[0].likes}</button>
+											</td>
+										</tr>
+                        			</table>
 								</div>
 							</div>
 						</div>
 					</div>`
-				)
-			$(".owl-details").owlCarousel({
-				loop: true,
-				autoplay: true,
-				margin: 10,
-				nav: false,
-				dots: true,
-				responsive: {
-					0: {
-						items: 1,
+					)
+				$(".owl-details").owlCarousel({
+					loop: true,
+					autoplay: true,
+					margin: 10,
+					nav: false,
+					dots: true,
+					responsive: {
+						0: {
+							items: 1,
+						},
+						600: {
+							items: 2,
+						},
+						1000: {
+							items: 2,
+						},
 					},
-					600: {
-						items: 2,
-					},
-					1000: {
-						items: 2,
-					},
-				},
-			})
-			load_map_details(data[0])
+				})
+				load_map_details(data[0])
+			}
 		})
 		.catch(function (error) {
 			console.error(error)
@@ -1090,9 +1403,9 @@ function load_map_details(code_prop) {
 // #region PAGINACION
 // PAGINACION
 function pagination() {
-	console.log("pagination")
+	// console.log("pagination")
 	var filters_home = JSON.parse(localStorage.getItem("filters_home")) || false
-	console.log("filters_home", filters_home)
+	// console.log("filters_home", filters_home)
 	var filters_shop = JSON.parse(localStorage.getItem("filters_shop")) || false
 	if (filters_home !== false) {
 		var url = "module/shop/controller/controller_shop.php?op=count_home"
@@ -1102,11 +1415,11 @@ function pagination() {
 		var url = "module/shop/controller/controller_shop.php?op=count"
 	}
 	ajaxPromise(url, "POST", "JSON", {"filters_home": filters_home, "filters_shop": filters_shop}).then(function (data) {
-		console.log("dentro de then pagination", data)
+		// console.log("dentro de then pagination", data)
 		var total_items = data[0].contador
 		var items_page = 2
 		var total_pages = Math.ceil(total_items / items_page)
-		console.log("Hay estas paginas", total_pages)
+		// console.log("Hay estas paginas", total_pages)
 		var currentPage = parseInt(localStorage.getItem("page")) || 1
 
 		var paginationContainer = document.getElementById("pagination")
@@ -1173,6 +1486,57 @@ function pagination() {
 	})
 }
 
+// LIKES
+function buttonLike() {
+	$(document).one("click", ".like-review", function (e) {
+		var code_prop = $(this).attr("id")
+		var acces_token = localStorage.getItem("acces_token")
+		localStorage.setItem("redirect_like", code_prop)
+		if (acces_token) {
+			console.log("dentro de if buttonLike")
+			console.log("acces_token", acces_token)
+			console.log("code_prop", code_prop)
+			ajaxPromise("module/shop/controller/controller_shop.php?op=like", "POST", "JSON", {
+				"code_prop": code_prop,
+				"acces_token": acces_token,
+			})
+				.then(function (data) {
+					console.log("dentro de then buttonLike", data)
+					$(this).children(".fa-heart").addClass("animate-like")
+					$(this).css("background", "#ed2553")
+					location.reload()
+				})
+				.catch(function (error) {
+					console.error(error)
+					// window.location.href = "index.php?module=ctrl_exceptions&op=503&type=503&lugar=ButtonLike SHOP";
+				})
+		} else {
+			window.location.href = "index.php?page=login&op=list"
+		}
+	})
+}
+
+function checkLike(code_prop, acces_token) {
+	return new Promise((resolve, reject) => {
+		ajaxPromise("module/shop/controller/controller_shop.php?op=checklike", "POST", "JSON", {
+			"code_prop": code_prop,
+			"acces_token": acces_token,
+		})
+			.then(function (data) {
+				console.log("dentro de then checklike", data)
+				if (data === "ExisteLike") {
+					resolve("like-review Button_segundario active")
+				} else {
+					resolve("like-review Button_segundario")
+				}
+			})
+			.catch(function (error) {
+				console.error(error)
+				reject(error)
+			})
+	})
+}
+
 $(document).ready(function () {
 	// console.log("loadprops1");
 	print_filters()
@@ -1181,4 +1545,5 @@ $(document).ready(function () {
 	clicks()
 	filters_shop()
 	pagination()
+	buttonLike()
 })

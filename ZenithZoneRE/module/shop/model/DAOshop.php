@@ -553,6 +553,41 @@ class DAOshop
         connect::close($conexion);
         return $retrArray;
     }
+
+    function like($username, $code_prop)
+    {
+        $sql = "CALL UpdateLikes('$username', '$code_prop')";
+
+        $conexion = connect::con();
+        $res = mysqli_query($conexion, $sql);
+        connect::close($conexion);
+
+        return $res;
+    }
+
+    function checklike($username, $code_prop)
+    {
+        $result = "";
+        $sql = "SELECT * 
+        FROM `likes` 
+        WHERE `username` = '$username' AND `code_prop` = '$code_prop'";
+
+        $conexion = connect::con();
+        $res = mysqli_query($conexion, $sql);
+        $row = mysqli_fetch_assoc($res);
+
+        if ($row) {
+            $res = mysqli_query($conexion, $sql);
+            $result = "ExisteLike";
+        } else {
+            $res = mysqli_query($conexion, $sql);
+            $result = "NoExisteLike";
+        }
+
+        connect::close($conexion);
+
+        return $result;
+    }
 }
 
 ?>

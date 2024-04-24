@@ -29,11 +29,13 @@ function login() {
 					// document.getElementById("username").innerHTML = result.username
 					// document.getElementById("avatar").src = result.avatar
 
-					// if (localStorage.getItem("redirect_like")) {
-					setTimeout(' window.location.href = "index.php?module=ctrl_shop&op=list"; ', 500)
-					// } else {
-					// setTimeout(' window.location.href = "index.php?module=ctrl_home&op=list"; ', 1000)
-					// }
+					if (localStorage.getItem("redirect_like")) {
+						// console.log("redirect_like")
+						setTimeout(' window.location.href = "index.php?page=controller_shop&op=list"; ', 500)
+					} else {
+						// console.log("redirect_home")
+						setTimeout(' window.location.href = "index.php?page=controller_home&op=list"; ', 1000)
+					}
 				}
 			})
 			.catch(function (e) {
